@@ -28,6 +28,9 @@ services:
     environment:
       DATABASE_URL: postgresql://example_user:secret@postgres/example_db
       CORS_HOST: http://localhost:3000
+      WAIT_HOSTS: postgres:5432
+      PORT: 8000
+      SIGNING_KEY: secret
     build:
       context: api
       dockerfile: Dockerfile.dev
