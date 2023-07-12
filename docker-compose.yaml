@@ -30,7 +30,7 @@ services:
       CORS_HOST: http://localhost:3000
       WAIT_HOSTS: postgres:5432
       PORT: 8000
-      SIGNING_KEY: secret
+      SIGNING_KEY: f1cc7557872c23818e2740dce07e1ed780a9238ff9e96e778914928d4aa4a66b
     build:
       context: api
       dockerfile: Dockerfile.dev

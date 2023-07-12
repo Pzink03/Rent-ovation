@@ -6,9 +6,9 @@ from fastapi import (
     APIRouter,
     Request,
 )
+
 from jwtdown_fastapi.authentication import Token
 from authenticator import authenticator
-from queries.landlords import LandlordRepository
 
 from pydantic import BaseModel
 

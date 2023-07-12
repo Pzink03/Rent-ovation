@@ -1,11 +1,10 @@
 from fastapi import FastAPI, APIRouter
 from fastapi.middleware.cors import CORSMiddleware
-from routers import landlords, accounts
+from routers import accounts
 from authenticator import authenticator
 import os
 
 app = FastAPI()
-app.include_router(landlords.router)
 app.include_router(authenticator.router)
 app.include_router(accounts.router)
 
