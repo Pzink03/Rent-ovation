@@ -31,7 +31,16 @@ def create_property(
     return property_obj
 
 @router.get("/property/", response_model = List[PropertyOut])
-def get_all(
+def get_all_properties(
     repo: PropertyRepository = Depends(),
 ):
     return repo.get_all_properties()
+
+
+@router.get("/property/user", response_model = List[PropertyOut])
+def get_all_properties_from_user(
+    repo: PropertyRepository = Depends(),
+    acccount_data: dict = Depends(authenticator.get_current_account_data),
+):
+    id = acccount_data['id']
+    return repo.get_all_properties_from_user(id)
