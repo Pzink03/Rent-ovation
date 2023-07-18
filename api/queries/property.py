@@ -31,9 +31,16 @@ class PropertyOut(BaseModel):
     description: Optional[str]
 
 
-
-class PropertyList(BaseModel):
-    properties: List[PropertyOut]
+class PropertyUpdate(BaseModel):
+    id: str
+    tenant_id: Optional[str]
+    name: str
+    address: str
+    city: str
+    state: str
+    zipcode: int
+    picture_url: Optional[str]
+    description: Optional[str]
 
 
 class PropertyRepository:
@@ -76,7 +83,7 @@ class PropertyRepository:
                     )
         except Exception:
             traceback.print_exc()
-            return Error(message="create property failed")
+            return Error(message="Create property failed")
 
 
     def get_all_properties(self) -> Union[Error, List[PropertyOut]]:
@@ -152,3 +159,65 @@ class PropertyRepository:
             picture_url=record[8],
             description=record[9],
         )
+
+
+    def update_a_property(self, property_id: int, property: PropertyIn) -> Union[PropertyOut, Error]:
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    db.execute(
+                    """
+                        UPDATE property
+                        SET tenant_id = %s
+                        , name = %s
+                        , address = %s
+                        , city = %s
+                        , state = %s
+                        , zipcode = %s
+                        , picture_url = %s
+                        , description = %s
+                        WHERE id = %s
+                        """,
+                    [
+                        property.tenant_id,
+                        property.name,
+                        property.address,
+                        property.city,
+                        property.state,
+                        property.zipcode,
+                        property.picture_url,
+                        property.description,
+                        property_id,
+                    ]
+                )
+            return PropertyUpdate(
+                        id=str(property_id),
+                        tenant_id=str(property.tenant_id),
+                        name=property.name,
+                        address=property.address,
+                        city=property.city,
+                        state=property.state,
+                        zipcode=property.zipcode,
+                        picture_url=property.picture_url,
+                        description=property.description
+                    )
+        except Exception:
+            traceback.print_exc()
+            return Error(message="Update user properties failed")
+
+
+    def delete_a_property(self, property_id: int) -> bool:
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    db.execute(
+                        """
+                        DELETE FROM property
+                        WHERE id = %s
+                        """,
+                        [property_id]
+                    )
+                return True
+        except Exception:
+            traceback.print_exc()
+            return False
