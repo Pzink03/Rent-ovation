@@ -3,6 +3,7 @@ from typing import Optional, List, Union
 from queries.pool import pool
 import traceback
 
+
 class Error(BaseModel):
     message: str
 
@@ -92,7 +93,7 @@ class PropertyRepository:
                 with conn.cursor() as db:
                     result = db.execute(
                         """
-                         SELECT id
+                        SELECT id
                             , landlord_id
                             , tenant_id
                             , name
@@ -121,7 +122,7 @@ class PropertyRepository:
                 with conn.cursor() as db:
                     result = db.execute(
                         """
-                         SELECT id
+                        SELECT id
                             , landlord_id
                             , tenant_id
                             , name
