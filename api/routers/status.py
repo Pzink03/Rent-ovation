@@ -22,7 +22,7 @@ def get_all_statuses(
     return repo.get_all_statuses()
 
 @router.delete("/status/{status_id}", response_model = bool)
-def delete_property(
+def delete_status(
     status_id: int,
     repo: StatusRepository = Depends(),
 ) -> bool:
