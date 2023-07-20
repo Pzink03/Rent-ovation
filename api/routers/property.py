@@ -9,6 +9,7 @@ from queries.property import (
     PropertyUpdate
 )
 
+
 authenticator = AccountAuthenticator(os.environ["SIGNING_KEY"])
 router = APIRouter()
 

@@ -1,6 +1,6 @@
 from fastapi import FastAPI, APIRouter
 from fastapi.middleware.cors import CORSMiddleware
-from routers import accounts, property, status
+from routers import accounts, property, status, rent
 from authenticator import authenticator
 import os
 
@@ -33,3 +33,4 @@ def launch_details():
 
 app.include_router(property.router)
 app.include_router(status.router)
+app.include_router(rent.router)
