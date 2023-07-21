@@ -13,7 +13,6 @@ class Error(BaseModel):
 class RentIn(BaseModel):
     amount_due: int
     due_date: date
-    property_id: str
 
 
 class RentOut(BaseModel):
