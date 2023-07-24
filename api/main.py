@@ -2,12 +2,19 @@ from fastapi import FastAPI, APIRouter
 from fastapi.middleware.cors import CORSMiddleware
 from routers import accounts, property
 from authenticator import authenticator
+from app import tenant_signup, landlord_signup
 import os
 
 
 app = FastAPI()
 app.include_router(authenticator.router)
 app.include_router(accounts.router)
+app.include_router(
+    tenant_signup.router, prefix="/signup", tags=["Tenant Signup"]
+)
+app.include_router(
+    landlord_signup.router, prefix="/signup", tags=["Landlord Signup"]
+)
 
 app.add_middleware(
     CORSMiddleware,
