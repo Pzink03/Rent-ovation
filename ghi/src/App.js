@@ -3,8 +3,12 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Nav from "./Nav.js";
 import MainPage from "./MainPage.js";
 import LandlordPage from "./LandlordPage.js";
+import PropertyForm from "./AddProperty.js";
 // import ErrorNotification from "./ErrorNotification";
 import "./css/App.css";
+
+import TenantPage from "./TenantPage.js";
+import AboutPage from "./AboutPage.js";
 
 function App() {
   // const [launchInfo, setLaunchInfo] = useState([]);
@@ -37,6 +41,9 @@ function App() {
         <Routes>
           <Route path="/" element={<MainPage />} />
           <Route path="/landlord" element={<LandlordPage />} />
+          <Route path="/property" element={<PropertyForm />} />
+          <Route path="/tenant" element={<TenantPage />} />
+          <Route path="/about" element={<AboutPage />} />
         </Routes>
       </div>
     </BrowserRouter>

@@ -1,0 +1,42 @@
+.tenant-property-picture {
+  height: 400px;
+  width: 450px;
+}
+
+.btn.btn-animation.tenant-btn {
+  margin: 1rem;
+  animation: btn-grow-enter var(--btn-grow-duration) var(--btn-grow-delay)
+    backwards;
+}
+
+.btn.btn-animation.tenant-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 2px 5px 1px black;
+}
+
+.card-feature.tenant {
+  text-align: center;
+  list-style: none;
+  margin: 0;
+}
+
+.main-card.tenant {
+  animation: sub-title-enter var(--sub-title-duration) var(--sub-title-delay)
+    backwards;
+}
+
+.subtitle.gradient-text.tenant {
+  animation: none;
+}
+
+.feature.tenant {
+  justify-self: flex-start;
+  align-self: center;
+  margin: 0;
+  margin-bottom: 3rem;
+}
+
+.header-btn {
+  animation: btn-grow-enter var(--btn-grow-duration) var(--btn-grow-delay)
+    backwards;
+}

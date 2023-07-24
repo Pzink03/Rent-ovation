@@ -1,0 +1,104 @@
+.form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  height: 100vh;
+}
+
+.full-screen-header {
+  height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.form-background {
+  content: "";
+  position: absolute;
+
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url("img/header_image.jpg");
+  background-size: cover;
+  background-position: 40% center;
+  filter: blur(0px);
+  z-index: -1; /* Place the pseudo-element below the header content */
+}
+
+.form-title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: black;
+  font-size: 3rem;
+  margin: 0;
+  margin-bottom: 2rem;
+  padding: 1rem 5rem;
+}
+
+.input {
+  border: 1px solid #aaa;
+  outline: none;
+  padding: 0.5em 1em;
+  border-radius: 0.2em;
+  background-color: white;
+  text-align: inline;
+}
+
+.input:focus {
+  border-color: #0af;
+  box-shadow: 0 0 5px #0af;
+}
+
+.form-floating {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0.5rem;
+}
+
+.form-box {
+  background-color: #ebf7fd;
+  border: 1px solid black;
+  border-radius: 0.3rem;
+  box-shadow: 0 1px 20px 20px rgba(0, 0, 0, 0.4);
+}
+
+.label {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.btn-form-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.form-box:hover {
+  border: 1px solid #0af;
+  box-shadow: 0 0 5px 5px #0af;
+}
+
+.form-dropdown {
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
