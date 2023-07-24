@@ -1,6 +1,6 @@
 from fastapi import FastAPI, APIRouter
 from fastapi.middleware.cors import CORSMiddleware
-from routers import accounts, property
+from routers import accounts, property, status
 from authenticator import authenticator
 from app import tenant_signup, landlord_signup
 import os
@@ -39,3 +39,4 @@ def launch_details():
 
 
 app.include_router(property.router)
+app.include_router(status.router)
