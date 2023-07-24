@@ -11,7 +11,7 @@ from jwtdown_fastapi.authentication import Token
 from authenticator import authenticator
 
 from pydantic import BaseModel
-
+from typing import List
 from queries.accounts import (
     AccountIn,
     AccountOut,
@@ -34,6 +34,13 @@ class HttpError(BaseModel):
 
 
 router = APIRouter()
+
+
+@router.get("/accounts/all/", response_model=List[AccountOut])
+def get_all_accounts(
+    repo: AccountRepository = Depends(),
+):
+    return repo.get_all_accounts()
 
 
 @router.get("/api/protected", response_model=bool)

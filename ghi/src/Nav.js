@@ -2,6 +2,7 @@ import { NavLink } from "react-router-dom";
 import logo from "./img/logo.png";
 import "./index.css";
 import "./css/landlordpage.css";
+import "./form.css";
 
 function Nav() {
   return (
@@ -12,13 +13,13 @@ function Nav() {
 
       <ul className="nav-list">
         <li>
-          <NavLink className="btn" to="#">
+          <NavLink className="btn" to="/signup">
             Sign Up
           </NavLink>
         </li>
 
         <li>
-          <NavLink className="btn" to="#">
+          <NavLink className="btn" to="/login">
             Login
           </NavLink>
         </li>
