@@ -1,15 +1,14 @@
 import os
-from fastapi import APIRouter, Depends, Response
-from pydantic import BaseModel
-from typing import List, Optional, Union
+from fastapi import APIRouter, Depends
+from typing import List
 from authenticator import AccountAuthenticator
 from queries.property import (
-    Error,
     PropertyIn,
     PropertyOut,
     PropertyRepository,
     PropertyUpdate,
 )
+
 
 authenticator = AccountAuthenticator(os.environ["SIGNING_KEY"])
 router = APIRouter()
