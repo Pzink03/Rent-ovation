@@ -1,5 +1,5 @@
 import os
-from fastapi import APIRouter, Depends, Response, HTTPException
+from fastapi import APIRouter, Depends
 from typing import List, Dict
 from queries.billings import (
     BillingsIn,
@@ -17,6 +17,7 @@ def create_billings(
     repo: BillingsRepository = Depends(),
 ):
     return repo.create_billings(billings)
+    
 
 
 @router.get(
