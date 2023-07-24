@@ -5,6 +5,7 @@ const LandlordSignupForm = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleNameChange = (event) => {
     setName(event.target.value);
@@ -21,19 +22,28 @@ const LandlordSignupForm = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
+    setIsSubmitting(true);
+
     try {
       const response = await axios.post('http://localhost:3000/signup/landlord', {
         name,
         email,
-        password
+        password,
       });
 
       // handle the successful signup
-
       console.log('Landlord signup successful:', response.data);
+
+      // Reset the form fields after successful signup
+      setName('');
+      setEmail('');
+      setPassword('');
     } catch (error) {
       console.error('Landlord signup failed:', error);
+      // handle error, show error message.
     }
+
+    setIsSubmitting(false);
   };
 
   return (
@@ -67,7 +77,7 @@ const LandlordSignupForm = () => {
           onChange={handlePasswordChange}
           required
         /><br /><br />
-        <button type="submit">Signup</button>
+        <button type="submit" disabled={isSubmitting}>Signup</button>
       </form>
     </div>
   );
