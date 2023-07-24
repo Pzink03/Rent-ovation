@@ -3,8 +3,6 @@ volumes:
     external: true
   pg-admin:
     external: true
-  mongo-data:
-    external: true
 
 services:
   pg-admin:
@@ -17,14 +15,6 @@ services:
       - PGADMIN_DEFAULT_EMAIL=rentovation@gmail.com
       - PGADMIN_DEFAULT_PASSWORD=password
       - PGADMIN_DISABLE_POSTFIX=1
-
-  mongo:
-    image: mongo:5
-    volumes:
-      - mongo-data:/data/db
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME=example_user
-      - MONGO_INITDB_ROOT_PASSWORD=secret
 
   postgres:
     image: postgres:14.5-bullseye

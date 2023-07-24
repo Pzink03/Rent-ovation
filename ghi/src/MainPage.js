@@ -1,8 +1,4 @@
 import React from "react";
-import { ReactComponent as Logo } from "./img/arrow_down.svg";
-import logo from "./img/logo.png";
-import header_image from "./img/header_image.jpg";
-import profile1 from "./img/profile1.jpg";
 import { NavLink } from "react-router-dom";
 
 function MainPage() {

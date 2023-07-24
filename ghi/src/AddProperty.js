@@ -15,9 +15,7 @@ function PropertyForm() {
   const fetchData = async () => {
     const accountsUrl = "http://localhost:8000/accounts/all/";
 
-    const accountsResponse = await fetch(accountsUrl, {
-      headers: { Authorization: "Bearer ${token}" },
-    });
+    const accountsResponse = await fetch(accountsUrl);
     if (accountsResponse.ok) {
       const accountsData = await accountsResponse.json();
       console.log(accountsData);
@@ -50,13 +48,7 @@ function PropertyForm() {
         "Content-Type": "application/json",
       },
     };
-    const createPropertyResponse = await fetch(
-      propertyUrl,
-      {
-        headers: { Authorization: "Bearer ${token}" },
-      },
-      fetchOptions
-    );
+    const createPropertyResponse = await fetch(propertyUrl, fetchOptions);
     if (createPropertyResponse.ok) {
       setTenant("");
       setName("");
