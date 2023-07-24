@@ -1,37 +1,30 @@
+import os
 from fastapi import APIRouter, Depends, Response, HTTPException
-from typing import Union, Optional, List
+from typing import List, Dict
 from queries.billings import (
-    Error,
+    BillingsIn,
     BillingsOut,
-    BillingsWithBillingsOut,
     BillingsRepository,
 )
-from authenticator import authenticator
+from authenticator import AccountAuthenticator
 
 router = APIRouter()
 
 
-@router.post("/list", response_model=Union[BillingsOut, Error])
-def create_billings_list(
-    response: Response,
+@router.post("/billings", response_model= BillingsOut)
+def create_billings(
+    billings: BillingsIn,
     repo: BillingsRepository = Depends(),
-    account_data: dict = Depends(authenticator.get_current_account_data),
 ):
-    response.status = 400
-    return repo.create()
+    return repo.create_billings(billings)
 
 
 @router.get(
-    "/list/{billings_id}/items",
-    response_model=Union[Optional[List[BillingsWithBillingsOut]], Error],
-)
-def get_one_billings_w_items(
-    billings_id: int,
-    response: Response,
+    "/billings/",
+    response_model= Dict[str, List[BillingsOut]])
+def get_all_billings(
     repo: BillingsRepository = Depends(),
-    account_data: dict = Depends(authenticator.get_current_account_data),
 ):
-    billings = repo.get_one_with_billings_items(billings_id)
-    if billings is None:
-        raise HTTPException(status_code=404, detail="billings not found")
-    return billings
+     billings = repo.get_all_billings()
+     return {"billings": billings}
+

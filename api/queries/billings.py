@@ -1,17 +1,22 @@
 from pydantic import BaseModel
 from typing import Union, List
 from queries.pool import pool
+import traceback
 
 
 class Error(BaseModel):
     message: str
 
 
+class BillingsIn(BaseModel):
+    id: int
+    name: str
+    card_number: int
+    expirydate: int
+    cvv: int
+
+
 class BillingsOut(BaseModel):
-    billings_id: int
-
-
-class BillingsWithBillingsOut(BaseModel):
     id: int
     name: str
     card_number: int
@@ -20,53 +25,57 @@ class BillingsWithBillingsOut(BaseModel):
 
 
 class BillingsRepository:
-    def get_one_with_billings_items(
-        self, billings_id: int
-    ) -> Union[List[BillingsWithBillingsOut], Error]:
+    def create_billings(
+        self, billings: BillingsIn
+    ) -> Union[BillingsOut, Error]:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
                     db.execute(
                         """
-                            SELECT ci.id
-                                , mi.name
-                                , ci.card_number
-                                , ci.expirydate
-                                , ci.cvv;
+                        INSERT INTO billing
+                            (id, name, card_number, expirydate, cvv)
+                        VALUES
+                            (%s,%s,%s,%s,%s)
+                        RETURNING id;
                         """,
-                        [billings_id],
-                    )
-                    results = db.fetchall()
-                    if results is None:
-                        return None
-                    result = []
-                    for record in results:
-                        List = BillingsWithBillingsOut(
-                            id=record[0],
-                            name=record[1],
-                            card_number=record[2],
-                            expirydate=record[3],
-                            cvv=record[4],
-                        )
-                        result.append(List)
-                    return result
-        except Exception as e:
-            print(e)
-            return {"message": "Invalid billings ID"}
 
-    def create(self) -> Union[BillingsOut, Error]:
-        try:
+                        [
+                            billings.id,
+                            billings.name,
+                            billings.card_number,
+                            billings.expirydate,
+                            billings.cvv,
+
+                         ],
+                    )
+                    result = db.fetchone()
+                    id = str(result[0])
+                    return BillingsOut(
+                        id=id,
+                        name=billings.name,
+                        card_number=billings.card_number,
+                        expirydate=billings.expirydate,
+                        cvv=billings.cvv,
+                    )
+        except Exception:
+            traceback.print_exc()
+            return Error(message="Create billings failed")
+
+
+    def get_all_billings(self) -> List[BillingsOut]:
             with pool.connection() as conn:
                 with conn.cursor() as db:
                     result = db.execute(
                         """
-                        INSERT INTO billings DEFAULT VALUES
-                        RETURNING billings_id
-                        """
+                        SELECT id 
+                            , name
+                            , card_number
+                            , expirydate
+                            , cvv
+                            FROM billings
+                            ORDER BY id;
+                            """
                     )
-                    row = result.fetchone()
-                    billings_id = row[0]
-                    return BillingsOut(billings_id_id=billings_id)
-        except Exception as e:
-            print(e)
-            return {"message": "Create did not work"}
+                    result = db.fetchall()  
+            return [self.record_to_billings_out(record) for record in result]
