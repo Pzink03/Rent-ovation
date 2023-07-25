@@ -1,14 +1,14 @@
 from fastapi import FastAPI
-from routers import billings
 from authenticator import authenticator
 from fastapi.middleware.cors import CORSMiddleware
-from routers import accounts
+from routers import accounts, property, status, rent, appointments
 from authenticator import authenticator
 import os
 
 app = FastAPI()
 app.include_router(authenticator.router)
-app.include_router(billings.router)
+app.include_router(accounts.router)
+
 
 app.add_middleware(
     CORSMiddleware,
@@ -29,3 +29,8 @@ def launch_details():
             "min": "00",
         }
     }
+
+app.include_router(property.router)
+app.include_router(status.router)
+app.include_router(rent.router)
+app.include_router(appointments.router)
