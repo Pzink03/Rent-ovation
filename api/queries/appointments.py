@@ -22,11 +22,26 @@ class AppointmentOut(BaseModel):
     property_id: str
 
 
+class AppointmentOutAll(BaseModel):
+    appointment_id: str
+    issue: str
+    created_on: date
+    status_label: str
+    property_id: str
+    property_name: str
+    picture_url: str
+    tenant_id: str
+    tenant_email: str
+
+
+
+
 class LandlordAppointmentOut(BaseModel):
     appointment_id: str
     issue: str
     created_on: date
     status_id: int
+    status_label: str
     property_id: str
     tenant_id: str
     name: str
@@ -90,19 +105,22 @@ class AppointmentRepository:
             return Error(message="Create property failed")
 
 
-    def get_all_appointments(self) -> Union[Error, List[AppointmentOut]]:
+    def get_all_appointments(self) -> Union[Error, List[AppointmentOutAll]]:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
                     result = db.execute(
                         """
-                        SELECT id
-                        , issue
-                        , created_on
-                        , property_id
-                        , status_id
-                        FROM appointment
-                        ORDER BY id;
+                        SELECT ap.id AS appointment_id, ap.issue, ap.created_on,
+                        p.id AS property_id, p.name AS property_name,
+                        p.picture_url,
+                        s.status_label,
+                        a.id as tenant_id, a.email AS tenant_email
+                        FROM appointment ap
+                        LEFT OUTER JOIN status s ON (s.id = ap.status_id)
+                        LEFT OUTER JOIN property p ON (p.id = ap.property_id)
+                        LEFT OUTER JOIN accounts a ON (a.id = p.tenant_id)
+                        ORDER BY ap.id;
                         """
                     )
                     return [
@@ -111,7 +129,7 @@ class AppointmentRepository:
                     ]
         except Exception:
             traceback.print_exc()
-            return Error(message="Getting rents failed")
+            return Error(message="Getting appointments failed")
 
 
     def get_all_appointments_for_landlord(self, id) -> Union[Error, List[LandlordAppointmentOut]]:
@@ -125,10 +143,12 @@ class AppointmentRepository:
                             p.address, p.city, p.state, p.zipcode,
                             p.picture_url, p.description,
                             ap.id AS appointment_id, ap.issue, ap.created_on,
-                            ap.status_id
+                            ap.status_id,
+                            s.id AS status_id, s.status_label
                         FROM accounts a
                         LEFT OUTER JOIN property p ON(a.id = p.landlord_id)
                         LEFT OUTER JOIN appointment ap ON(p.id=ap.property_id)
+                        LEFT OUTER JOIN status s ON(ap.status_id=s.id)
                         WHERE a.id = %s
                         ORDER BY ap.status_id DESC, ap.created_on ASC
                         """,
@@ -187,12 +207,16 @@ class AppointmentRepository:
 
 
     def record_to_appointment_out(self, record):
-        return AppointmentOut(
-            id=record[0],
+        return AppointmentOutAll(
+            appointment_id=record[0],
             issue=record[1],
             created_on=record[2],
             property_id=record[3],
-            status_id=record[4],
+            property_name=record[4],
+            picture_url=record[5],
+            status_label=record[6],
+            tenant_id=record[7],
+            tenant_email=record[8],
         )
 
 

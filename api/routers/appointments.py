@@ -8,7 +8,8 @@ from queries.appointments import (
     AppointmentUpdateIn,
     AppointmentUpdateOut,
     AppointmentRepository,
-    LandlordAppointmentOut
+    LandlordAppointmentOut,
+    AppointmentOutAll
 )
 
 
@@ -44,7 +45,7 @@ def delete_appointment(
     return repo.delete_appointment(appointment_id)
 
 
-@router.get("/appointment/", response_model = List[AppointmentOut])
+@router.get("/appointment/", response_model = List[AppointmentOutAll])
 def get_all_appointments(
     repo: AppointmentRepository = Depends(),
 ):
