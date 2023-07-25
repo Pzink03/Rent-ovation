@@ -129,10 +129,11 @@ function AboutPage() {
       <section className="section section-accent">
         <h2 className="section-title">Want to know more?</h2>
         {/* <p className="free-sub-title">Want to learn more about our team?</p> */}
-
-        <NavLink className="contact-btn btn" to="#">
-          Contact Us!
-        </NavLink>
+        <div className="btn-container contact">
+          <NavLink className="contact-btn btn" to="#">
+            Contact Us!
+          </NavLink>
+        </div>
       </section>
 
       {/* <main>

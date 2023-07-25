@@ -4,6 +4,7 @@ import Nav from "./Nav.js";
 import MainPage from "./MainPage.js";
 import LandlordPage from "./LandlordPage.js";
 import PropertyForm from "./AddProperty.js";
+import AppointmentForm from "./AddAppointment.js";
 // import ErrorNotification from "./ErrorNotification";
 import "./css/App.css";
 
@@ -44,6 +45,7 @@ function App() {
           <Route path="/property" element={<PropertyForm />} />
           <Route path="/tenant" element={<TenantPage />} />
           <Route path="/about" element={<AboutPage />} />
+          <Route path="/add-appointment" element={<AppointmentForm />} />
         </Routes>
       </div>
     </BrowserRouter>

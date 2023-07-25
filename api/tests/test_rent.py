@@ -1,21 +1,21 @@
 from fastapi.testclient import TestClient
 from main import app
-from queries.accounts import AccountRepository
+from queries.rent import RentRepository
 
 
 client = TestClient(app)
 
 
-class EmptyAccountQueries:
-    def get_all_accounts(self):
+class EmptyRentQueries:
+    def get_all_rents(self):
         return []
 
 
-def test_get_all_accounts():
+def test_get_all_rents():
     # Arrange
-    app.dependency_overrides[AccountRepository] = EmptyAccountQueries
+    app.dependency_overrides[RentRepository] = EmptyRentQueries
     # Act
-    response = client.get("/accounts/all/")
+    response = client.get("/rent/")
     # Clean up
     app.dependency_overrides = {}
     # Assert

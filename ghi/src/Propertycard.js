@@ -62,7 +62,7 @@ function PropertyCard() {
             <div className="property-feature">{property.address}</div>
             <div className="btn-container">
               <NavLink className="btn btn-animation" to="/landlord">
-                Appointments
+                Update
               </NavLink>
               <NavLink
                 className="btn btn-animation btn-danger"

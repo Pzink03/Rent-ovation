@@ -24,7 +24,10 @@ function TenantPage() {
             <NavLink className="btn btn-animation tenant-btn" to="/tenant">
               Pay Rent
             </NavLink>
-            <NavLink className="btn btn-animation tenant-btn" to="/tenant">
+            <NavLink
+              className="btn btn-animation tenant-btn"
+              to="/add-appointment"
+            >
               Book Appointment
             </NavLink>
           </div>
