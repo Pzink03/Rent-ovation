@@ -3,8 +3,6 @@ volumes:
     external: true
   pg-admin:
     external: true
-  mongo-data:
-    external: true
 
 services:
   pg-admin:
@@ -14,26 +12,18 @@ services:
     ports:
       - 8082:80
     environment:
-      - PGADMIN_DEFAULT_EMAIL=rentovation@gmail.com
-      - PGADMIN_DEFAULT_PASSWORD=password
-      - PGADMIN_DISABLE_POSTFIX=1
-
-  mongo:
-    image: mongo:5
-    volumes:
-      - mongo-data:/data/db
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME=example_user
-      - MONGO_INITDB_ROOT_PASSWORD=secret
+      PGADMIN_DEFAULT_EMAIL: rentovation@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: password
+      PGADMIN_DISABLE_POSTFIX: 1
 
   postgres:
     image: postgres:14.5-bullseye
     volumes:
       - postgres-data:/var/lib/postgresql/data
     environment:
-      - POSTGRES_PASSWORD=secret
-      - POSTGRES_USER=example_user
-      - POSTGRES_DB=example_db
+      POSTGRES_PASSWORD: secret
+      POSTGRES_USER: example_user
+      POSTGRES_DB: example_db
     ports:
       - 15432:5432
 
@@ -46,13 +36,12 @@ services:
     volumes:
       - ./api:/app
     environment:
-      - DATABASE_URL=postgresql://example_user:secret@postgres/example_db
-      - CORS_HOST=http://localhost:3000
-      - WAIT_HOSTS=postgres:5432
-      - PORT=8000
-      - SIGNING_KEY=f1cc7557872c23818e2740dce07e1ed780a9238ff9e96e778914928d4aa4a66b
-      - DB_NAME=db-name-for-your-app-db
-      - DB_URL=mongodb://example_user:secret@mongo
+      DATABASE_URL: postgresql://example_user:secret@postgres/example_db
+      CORS_HOST: http://localhost:3000
+      WAIT_HOSTS: postgres:5432
+      PORT: 8000
+      SIGNING_KEY: f1cc7557872c23818e2740dce07e1ed780a9238ff9e96e778914928d4aa4a66b
+      DB_NAME: db-name-for-your-app-db
 
   ghi:
     image: node:lts-bullseye
@@ -63,8 +52,8 @@ services:
     ports:
       - "3000:3000"
     environment:
-      - HOST_OS=${OS}
-      - NODE_ENV=development
-      - HOST=0.0.0.0
-      - PUBLIC_URL=http://localhost:3000
-      - REACT_APP_API_HOST=${REACT_APP_API_HOST}
+      HOST_OS: ${OS}
+      NODE_ENV: development
+      HOST: 0.0.0.0
+      PUBLIC_URL: http://localhost:3000
+      REACT_APP_API_HOST: ${REACT_APP_API_HOST}

@@ -1,3 +1,4 @@
+import React from "react";
 import { NavLink } from "react-router-dom";
 import logo from "./img/logo.png";
 import "./index.css";
@@ -12,13 +13,19 @@ function Nav() {
 
       <ul className="nav-list">
         <li>
-          <NavLink className="btn" to="#">
-            Sign Up
+          <NavLink className="btn" to="/tenant-signup">
+            Tenant Sign Up
           </NavLink>
         </li>
 
         <li>
-          <NavLink className="btn" to="#">
+          <NavLink className="btn" to="/landlord-signup">
+            Landlord Sign Up
+          </NavLink>
+        </li>
+
+        <li>
+          <NavLink className="btn" to="/login">
             Login
           </NavLink>
         </li>
