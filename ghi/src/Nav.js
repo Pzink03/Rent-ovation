@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom";
 import logo from "./img/logo.png";
 import "./index.css";
 import "./css/landlordpage.css";
+import "./form.css";
 
 function Nav() {
   return (

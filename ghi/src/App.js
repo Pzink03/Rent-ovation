@@ -1,12 +1,18 @@
-import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Nav from './Nav.js';
-import MainPage from './MainPage.js';
-import LandlordPage from './LandlordPage.js';
-import TenantSignupForm from './TenantSignupForm';
-import LandlordSignupForm from './LandlordSignupForm';
-import LoginForm from './LoginForm';
-import './css/App.css';
+import React from "react"; // Don't forget to import React!
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Nav from "./Nav.js";
+import MainPage from "./MainPage.js";
+import LandlordPage from "./LandlordPage.js";
+// import ErrorNotification from "./ErrorNotification";
+import "./css/App.css";
+
+import TenantPage from "./TenantPage.js";
+import AboutPage from "./AboutPage.js";
+import Login from "./LoginForm.js";
+
+// Import the missing components here:
+import TenantSignupForm from "./TenantSignupForm.js";
+import LandlordSignupForm from "./LandlordSignupForm.js";
 
 function App() {
   return (
@@ -19,7 +25,9 @@ function App() {
           <Route path="/landlord" element={<LandlordPage />} />
           <Route path="/tenant-signup" element={<TenantSignupForm />} />
           <Route path="/landlord-signup" element={<LandlordSignupForm />} />
-          <Route path="/login" element={<LoginForm />} />
+          <Route path="/tenant" element={<TenantPage />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/login" element={<Login />} />
         </Routes>
       </div>
     </BrowserRouter>

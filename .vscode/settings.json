@@ -6,5 +6,6 @@
   "cSpell.ignoreWords": ["middleware"],
   "[python]": {
     "editor.defaultFormatter": "ms-python.black-formatter"
-  }
+  },
+  "cSpell.words": ["Excalidraw"]
 }

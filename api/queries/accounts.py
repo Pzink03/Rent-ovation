@@ -1,9 +1,15 @@
 from pydantic import BaseModel
 from queries.pool import pool
+from typing import Optional, List, Union
+import traceback
 
 
 class DuplicateAccountError(ValueError):
     pass
+
+
+class Error(BaseModel):
+    message: str
 
 
 class AccountIn(BaseModel):
@@ -49,6 +55,27 @@ class AccountRepository(BaseModel):
                     hashed_password=hashed_password,
                     is_landlord=info.is_landlord,
                 )
+
+    def get_all_accounts(self) -> List[AccountOut]:
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    result = db.execute(
+                        """
+                         SELECT id
+                            , email
+                            , password
+                            , is_landlord
+                            FROM accounts
+                            ORDER BY id;
+                            """,
+                    )
+                    return [
+                        self.record_to_account_out(record) for record in result
+                    ]
+        except Exception:
+            traceback.print_exc()
+            return Error(message="Invalid")
 
     def get(self, email: str) -> AccountOutWithPassword:
         with pool.connection() as conn:

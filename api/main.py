@@ -1,13 +1,14 @@
-from fastapi import FastAPI, APIRouter
+from fastapi import FastAPI
+from authenticator import authenticator
 from fastapi.middleware.cors import CORSMiddleware
-from routers import accounts, property, status
+from routers import accounts, property, status, rent, appointments
 from authenticator import authenticator
 import os
-
 
 app = FastAPI()
 app.include_router(authenticator.router)
 app.include_router(accounts.router)
+
 
 app.add_middleware(
     CORSMiddleware,
@@ -16,7 +17,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
 
 @app.get("/api/launch-details")
 def launch_details():
@@ -30,6 +30,7 @@ def launch_details():
         }
     }
 
-
 app.include_router(property.router)
 app.include_router(status.router)
+app.include_router(rent.router)
+app.include_router(appointments.router)
