@@ -1,4 +1,4 @@
-import React from "react"; // Don't forget to import React!
+import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Nav from "./Nav.js";
 import MainPage from "./MainPage.js";
@@ -10,7 +10,7 @@ import TenantPage from "./TenantPage.js";
 import AboutPage from "./AboutPage.js";
 import Login from "./LoginForm.js";
 
-// Import the missing components here:
+
 import TenantSignupForm from "./TenantSignupForm.js";
 import LandlordSignupForm from "./LandlordSignupForm.js";
 

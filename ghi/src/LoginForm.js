@@ -3,12 +3,9 @@ import React, { useState } from "react";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [userType, setUserType] = useState("tenant"); // Default userType is set to tenant
-
+  const [userType, setUserType] = useState("tenant");
   const handleLogin = (e) => {
     e.preventDefault();
-    // Here, you would implement authentication logic and handle login
-    // For this example, we'll just log the user's input
     console.log("Email:", email);
     console.log("Password:", password);
     console.log("User Type:", userType);

@@ -33,7 +33,7 @@ const LandlordSignupForm = () => {
       // Handle the successful signup
       console.log("Landlord signup successful:", response.data);
 
-      // Reset the form fields after successful signup
+
       setName("");
       setEmail("");
       setPassword("");
