@@ -30,6 +30,12 @@ class RentOutAll(BaseModel):
     property_name: str
     landlord_id: str
     tenant_id: str
+    address: str
+    city: str
+    state: str
+    zipcode: str
+    picture_url: str
+    description: str
     landlord_email: str
     tenant_email: str
     status_id: str
@@ -119,6 +125,8 @@ class RentRepository:
                         SELECT r.id AS rent_id, r.amount_due, r.due_date
                         , r.property_id, r.status_id,
                         p.name AS property_name, p.tenant_id, p.landlord_id,
+                        p.address, p.city, p.state,
+                        p.zipcode, p.picture_url, p.description,
                         a1.email AS landlord_email,
                         a2.email AS tenant_email,
                         s.status_label
@@ -247,11 +255,17 @@ class RentRepository:
             property_id=record[3],
             property_name=record[5],
             landlord_id=record[7],
+            address=record[8],
+            city=record[9],
+            state=record[10],
+            zipcode=record[11],
+            picture_url=record[12],
+            description=record[13],
             tenant_id=record[6],
-            landlord_email=record[8],
-            tenant_email=record[9],
+            landlord_email=record[14],
+            tenant_email=record[15],
             status_id=record[4],
-            status_label=record[10]
+            status_label=record[16]
         )
 
 
