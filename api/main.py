@@ -3,12 +3,11 @@ from routers import billings
 from authenticator import authenticator
 from fastapi.middleware.cors import CORSMiddleware
 from routers import accounts
-from authenticator import authenticator
 import os
 
 app = FastAPI()
 app.include_router(authenticator.router)
-app.include_router(billings.router)
+
 
 app.add_middleware(
     CORSMiddleware,
@@ -29,3 +28,6 @@ def launch_details():
             "min": "00",
         }
     }
+
+
+app.include_router(billings.router)

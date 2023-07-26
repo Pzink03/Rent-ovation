@@ -9,6 +9,25 @@ body {
     background-image: linear-gradient(to right, #ff6b6b, #556270);
 }
 
+.navbar {
+  background-color: #333;
+  color: #fff;
+  padding: 10px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+.sidebar {
+  flex-shrink: 0;
+  width: 75px;
+  border-right: 1px solid var(--light-gray);
+  position: fixed;
+  left: 0;
+  top: 50px;
+}
+
 .container {
     background-color: rgba(255, 255, 255, 0.9);
     padding: 30px;

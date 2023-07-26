@@ -9,7 +9,7 @@ import "./css/App.css";
 
 import TenantPage from "./TenantPage.js";
 import AboutPage from "./AboutPage.js";
-
+import BillingsPage from "./Billings.js";
 function App() {
   // const [launchInfo, setLaunchInfo] = useState([]);
   // const [error, setError] = useState(null);
@@ -44,6 +44,7 @@ function App() {
           <Route path="/property" element={<PropertyForm />} />
           <Route path="/tenant" element={<TenantPage />} />
           <Route path="/about" element={<AboutPage />} />
+          <Route path ="/billings" element={<BillingsPage />} />
         </Routes>
       </div>
     </BrowserRouter>

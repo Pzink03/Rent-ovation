@@ -12,7 +12,7 @@ from authenticator import AccountAuthenticator
 router = APIRouter()
 
 
-@router.post("/billings", response_model= Union[BillingsOut, Error])
+@router.post("/create/billings/", response_model= Union[BillingsOut, Error])
 def create_billings(
     billings: BillingsIn,
     repo: BillingsRepository = Depends(),
