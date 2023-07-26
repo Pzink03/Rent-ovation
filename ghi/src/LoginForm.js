@@ -2,7 +2,7 @@ import useToken from "@galvanize-inc/jwtdown-for-react";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
-const LoginForm = ({ setIsLoggedIn }) => {
+const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [is_landlord, setIsLandlord] = useState(false);
@@ -17,7 +17,6 @@ const LoginForm = ({ setIsLoggedIn }) => {
         console.log(
           `email: ${email} password: ${password} is_landlord: ${is_landlord}`
         );
-        setIsLoggedIn(true);
 
         if (is_landlord !== true) {
           navigate("/tenant");

@@ -1,11 +1,29 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 function SignupForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [is_landlord, setIsLandlord] = useState(false);
+  const [account, setAccount] = useState(null);
   const navigate = useNavigate();
+
+  const getToken = async () => {
+    const tokenUrl = "http://localhost:8000/token";
+    const fetchOptions = {
+      method: "get",
+      credentials: "include",
+    };
+    const tokenResponse = await fetch(tokenUrl, fetchOptions);
+    if (tokenResponse.ok) {
+      const token = await tokenResponse.json();
+      if (token !== null) {
+        setAccount(token.account);
+      } else {
+        setAccount([]);
+      }
+    }
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -18,6 +36,7 @@ function SignupForm() {
     const fetchOptions = {
       method: "post",
       body: JSON.stringify(data),
+      credentials: "include",
       headers: {
         "Content-Type": "application/json",
       },
@@ -26,10 +45,22 @@ function SignupForm() {
     if (accountsResponse.ok) {
       setEmail("");
       setPassword("");
-      setIsLandlord(false);
-      navigate("/login");
+      getToken();
+      //   setIsLandlord(false);
+      //   navigate("/login");
     }
   };
+
+  useEffect(() => {
+    if (account) {
+      if (account.is_landlord) {
+        navigate("/landlord");
+      } else {
+        navigate("/tenant");
+      }
+    }
+    console.log(account);
+  }, [account]);
 
   const handleEmailChange = (event) => {
     const value = event.target.value;
