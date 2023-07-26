@@ -52,10 +52,11 @@ function BillingsPage() {
 
   return (
     <>
+            <div className="blur-background"></div>
             <div class="container">
-            <div className='row'>
-            <div className='offset-3 col-6'>
-                <div className="shadow p-4 mt-4">
+                <div className='row'>
+                <div className='offset-3 col-6'>
+                 <div className="shadow p-4 mt-4">
                     <h1>Billing Information</h1>
                     <form onSubmit={handleSubmit} id="create-billings-form">
                         <div className="form-group">
@@ -128,7 +129,6 @@ function BillingsPage() {
             </div>
         </div>
         </div>
-    
     </>
     );
 }; 

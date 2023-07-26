@@ -1,5 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import BillingsPage from "./Billings";
 
 import header_image from "./img/header_image.jpg";
 import "./css/tenantpage.css";
