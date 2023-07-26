@@ -20,40 +20,63 @@ class RentOut(BaseModel):
     amount_due: int
     due_date: date
     property_id: str
+
+
+class RentOutAll(BaseModel):
+    rent_id: str
+    amount_due: int
+    due_date: date
+    property_id: str
+    property_name: str
+    landlord_id: str
+    tenant_id: str
+    address: str
+    city: str
+    state: str
+    zipcode: str
+    picture_url: str
+    description: str
+    landlord_email: str
+    tenant_email: str
     status_id: str
+    status_label: str
+
 
 
 class LandlordRentOut(BaseModel):
-    rent_id: str
-    amount_due: int
-    due_date: date
     property_id: str
-    status_id: str
     tenant_id: Optional[str]
-    name: str
+    property_name: str
     address: str
     city: str
     state: str
     zipcode: int
     picture_url: Optional[str]
     description: Optional[str]
+    rent_id: str
+    amount_due: int
+    due_date: date
+    status_id: str
+    status_label: str
+    tenant_email: str
 
 
 class TenantRentOut(BaseModel):
-    rent_id: str
-    amount_due: int
-    due_date: date
     property_id: str
-    status_id: str
     landlord_id: str
-    name: str
+    property_name: str
     address: str
     city: str
     state: str
     zipcode: int
     picture_url: Optional[str]
     description: Optional[str]
-
+    rent_id: str
+    amount_due: int
+    due_date: date
+    status_id: str
+    status_label: str
+    landlord_email: str
 
 class RentUpdate(BaseModel):
     id: str
@@ -96,19 +119,26 @@ class RentRepository:
             return Error(message="Create property failed")
 
 
-    def get_all_rents(self) -> Union[Error, List[RentOut]]:
+    def get_all_rents(self) -> Union[Error, List[RentOutAll]]:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
                     result = db.execute(
                         """
-                        SELECT id
-                        , amount_due
-                        , due_date
-                        , property_id
-                        , status_id
-                        FROM rent
-                        ORDER BY id;
+                        SELECT r.id AS rent_id, r.amount_due, r.due_date
+                        , r.property_id, r.status_id,
+                        p.name AS property_name, p.tenant_id, p.landlord_id,
+                        p.address, p.city, p.state,
+                        p.zipcode, p.picture_url, p.description,
+                        a1.email AS landlord_email,
+                        a2.email AS tenant_email,
+                        s.status_label
+                        FROM rent r
+                        LEFT OUTER JOIN property p ON (p.id = r.property_id)
+                        LEFT OUTER JOIN accounts a1 ON (a1.id = p.landlord_id)
+                        LEFT OUTER JOIN accounts a2 ON (a2.id = p.tenant_id)
+                        LEFT OUTER JOIN status s ON (s.id = r.status_id)
+                        ORDER BY r.id;
                         """
                     )
                     return [
@@ -126,16 +156,20 @@ class RentRepository:
                 with conn.cursor() as db:
                     result = db.execute(
                         """
-                        SELECT a.id AS landlord_id,
-                            p.id AS property_id, p.tenant_id, p.name,
+                        SELECT a1.id AS landlord_id,
+                            p.id AS property_id, p.tenant_id, p.name AS property_name,
                             p.address, p.city, p.state, p.zipcode,
                             p.picture_url, p.description,
                             r.id AS rent_id, r.amount_due, r.due_date,
-                            r.status_id
-                        FROM accounts a
-                        LEFT OUTER JOIN property p ON(a.id = p.landlord_id)
-                        LEFT OUTER JOIN rent r ON(p.id=r.property_id)
-                        WHERE a.id = %s
+                            r.status_id,
+                            s.status_label,
+                            a2.email AS tenant_email
+                        FROM accounts a1
+                        LEFT OUTER JOIN property p ON (a1.id = p.landlord_id)
+                        LEFT OUTER JOIN rent r ON (p.id=r.property_id)
+                        LEFT OUTER JOIN status s ON (s.id=r.status_id)
+                        LEFT OUTER JOIN accounts a2 ON (p.tenant_id=a2.id)
+                        WHERE a1.id = %s
                         """,
                         [id]
                     )
@@ -154,16 +188,20 @@ class RentRepository:
                 with conn.cursor() as db:
                     result = db.execute(
                         """
-                        SELECT a.id AS tenant_id,
-                            p.id AS property_id, p.landlord_id, p.name,
+                        SELECT a1.id AS tenant_id,
+                            p.id AS property_id, p.landlord_id, p.name AS property_name,
                             p.address, p.city, p.state, p.zipcode,
                             p.picture_url, p.description,
                             r.id AS rent_id, r.amount_due, r.due_date,
-                            r.status_id
-                        FROM accounts a
-                        LEFT OUTER JOIN property p ON(a.id = p.tenant_id)
-                        LEFT OUTER JOIN rent r ON(p.id=r.property_id)
-                        WHERE a.id = %s
+                            r.status_id,
+                            s.status_label,
+                            a2.email AS landlord_email
+                        FROM accounts a1
+                        LEFT OUTER JOIN property p ON (a1.id = p.tenant_id)
+                        LEFT OUTER JOIN rent r ON (p.id=r.property_id)
+                        LEFT OUTER JOIN status s ON (s.id=r.status_id)
+                        LEFT OUTER JOIN accounts a2 ON (a2.id=p.landlord_id)
+                        WHERE a1.id = %s
                         """,
                         [id]
                     )
@@ -221,12 +259,24 @@ class RentRepository:
 
 
     def record_to_rent_out(self, record):
-        return RentOut(
-            id=record[0],
+        return RentOutAll(
+            rent_id=record[0],
             amount_due=record[1],
             due_date=record[2],
             property_id=record[3],
+            property_name=record[5],
+            landlord_id=record[7],
+            address=record[8],
+            city=record[9],
+            state=record[10],
+            zipcode=record[11],
+            picture_url=record[12],
+            description=record[13],
+            tenant_id=record[6],
+            landlord_email=record[14],
+            tenant_email=record[15],
             status_id=record[4],
+            status_label=record[16]
         )
 
 
@@ -235,7 +285,7 @@ class RentRepository:
             landlord_id=record[0],
             property_id=record[1],
             tenant_id=record[2],
-            name=record[3],
+            property_name=record[3],
             address=record[4],
             city=record[5],
             state=record[6],
@@ -246,14 +296,17 @@ class RentRepository:
             amount_due=record[11],
             due_date=record[12],
             status_id=record[13],
+            status_label=record[14],
+            tenant_email=record[15]
         )
+
 
     def record_to_rent_tenant_out(self, record):
         return TenantRentOut(
             tenant_id=record[0],
             property_id=record[1],
             landlord_id=record[2],
-            name=record[3],
+            property_name=record[3],
             address=record[4],
             city=record[5],
             state=record[6],
@@ -264,4 +317,6 @@ class RentRepository:
             amount_due=record[11],
             due_date=record[12],
             status_id=record[13],
+            status_label=record[14],
+            landlord_email=record[15]
         )
