@@ -12,15 +12,9 @@ services:
     ports:
       - 8082:80
     environment:
-<<<<<<< HEAD
-      PGADMIN_DEFAULT_EMAIL: rentovation@gmail.com
-      PGADMIN_DEFAULT_PASSWORD: password
-      PGADMIN_DISABLE_POSTFIX: 1
-=======
       - PGADMIN_DEFAULT_EMAIL=rentovation@gmail.com
       - PGADMIN_DEFAULT_PASSWORD=password
       - PGADMIN_DISABLE_POSTFIX=1
->>>>>>> b05058b8e70f6b71881c9eab4d33817dab3e45e7
 
   postgres:
     image: postgres:14.5-bullseye
@@ -42,20 +36,11 @@ services:
     volumes:
       - ./api:/app
     environment:
-<<<<<<< HEAD
-      DATABASE_URL: postgresql://example_user:secret@postgres/example_db
-      CORS_HOST: http://localhost:3000
-      WAIT_HOSTS: postgres:5432
-      PORT: 8000
-      SIGNING_KEY: f1cc7557872c23818e2740dce07e1ed780a9238ff9e96e778914928d4aa4a66b
-      DB_NAME: db-name-for-your-app-db
-=======
       - DATABASE_URL=postgresql://example_user:secret@postgres/example_db
       - CORS_HOST=http://localhost:3000
       - WAIT_HOSTS=postgres:5432
       - PORT=8000
       - SIGNING_KEY=f1cc7557872c23818e2740dce07e1ed780a9238ff9e96e778914928d4aa4a66b
->>>>>>> b05058b8e70f6b71881c9eab4d33817dab3e45e7
 
   ghi:
     image: node:lts-bullseye

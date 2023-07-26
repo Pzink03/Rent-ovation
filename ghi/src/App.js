@@ -8,16 +8,12 @@ import "./css/App.css";
 
 import TenantPage from "./TenantPage.js";
 import AboutPage from "./AboutPage.js";
-<<<<<<< HEAD
-import BillingsPage from "./Billings.js";
-=======
 import Login from "./LoginForm.js";
 
 
 import TenantSignupForm from "./TenantSignupForm.js";
 import LandlordSignupForm from "./LandlordSignupForm.js";
 
->>>>>>> main
 function App() {
   return (
     <BrowserRouter>
@@ -31,11 +27,7 @@ function App() {
           <Route path="/landlord-signup" element={<LandlordSignupForm />} />
           <Route path="/tenant" element={<TenantPage />} />
           <Route path="/about" element={<AboutPage />} />
-<<<<<<< HEAD
-          <Route path ="/billings" element={<BillingsPage />} />
-=======
           <Route path="/login" element={<Login />} />
->>>>>>> main
         </Routes>
       </div>
     </BrowserRouter>
