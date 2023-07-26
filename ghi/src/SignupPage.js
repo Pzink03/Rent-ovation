@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import useToken from "@galvanize-inc/jwtdown-for-react";
 import { useNavigate } from "react-router-dom";
 
 function SignupForm() {
@@ -7,6 +8,7 @@ function SignupForm() {
   const [is_landlord, setIsLandlord] = useState(false);
   const [account, setAccount] = useState(null);
   const navigate = useNavigate();
+  const { register } = useToken();
 
   const getToken = async () => {
     const tokenUrl = "http://localhost:8000/token";
@@ -25,42 +27,60 @@ function SignupForm() {
     }
   };
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  //   const handleSubmit = async (event) => {
+  //     event.preventDefault();
+  //     const data = {};
+  //     data.email = email;
+  //     data.password = password;
+  //     data.is_landlord = is_landlord;
+
+  //     const accountsUrl = "http://localhost:8000/api/accounts";
+  //     const fetchOptions = {
+  //       method: "post",
+  //       body: JSON.stringify(data),
+  //       credentials: "include",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //     };
+  //     const accountsResponse = await fetch(accountsUrl, fetchOptions);
+  //     if (accountsResponse.ok) {
+  //       setEmail("");
+  //       setPassword("");
+  //       getToken();
+  //         setIsLandlord(false);
+  //         navigate("/login");
+  //     }
+  //   };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
     const data = {};
     data.email = email;
     data.password = password;
     data.is_landlord = is_landlord;
+    data.username = email;
+    register(data, "http://localhost:8000/api/accounts", "post");
+    console.log(data);
+    getToken();
 
-    const accountsUrl = "http://localhost:8000/api/accounts";
-    const fetchOptions = {
-      method: "post",
-      body: JSON.stringify(data),
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
-    const accountsResponse = await fetch(accountsUrl, fetchOptions);
-    if (accountsResponse.ok) {
-      setEmail("");
-      setPassword("");
-      getToken();
-      //   setIsLandlord(false);
-      //   navigate("/login");
+    if (is_landlord !== true) {
+      navigate("/tenant");
+    } else {
+      navigate("/landlord");
     }
   };
-
-  useEffect(() => {
-    if (account) {
-      if (account.is_landlord) {
-        navigate("/landlord");
-      } else {
-        navigate("/tenant");
-      }
-    }
-    console.log(account);
-  }, [account]);
+  //   useEffect(() => {
+  //     if (account) {
+  //       if (account.is_landlord) {
+  //         navigate("/landlord");
+  //       } else {
+  //         navigate("/tenant");
+  //       }
+  //     }
+  //     console.log(account);
+  //   }, [account]);
 
   const handleEmailChange = (event) => {
     const value = event.target.value;

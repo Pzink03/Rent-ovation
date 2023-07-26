@@ -10,6 +10,7 @@ function PropertyCard() {
     const propertiesUrl = "http://localhost:8000/property/user";
     const fetchOptions = {
       method: "get",
+      credentials: "include",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,

@@ -28,6 +28,10 @@ class AccountOutWithPassword(AccountOut):
     hashed_password: str
 
 
+class AccountInTest(AccountIn):
+    username: str
+
+
 class AccountRepository(BaseModel):
     def create(
         self, info: AccountIn, hashed_password: str
