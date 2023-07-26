@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import logo from "./img/logo.png";
+import { useAuthContext } from "@galvanize-inc/jwtdown-for-react";
 
 function PropertyForm() {
   const [accounts, setAccounts] = useState([]);
@@ -11,6 +12,7 @@ function PropertyForm() {
   const [zipcode, setZipcode] = useState("");
   const [pictureUrl, setPictureUrl] = useState("");
   const [description, setDescription] = useState("");
+  const { token } = useAuthContext();
 
   const fetchData = async () => {
     const accountsUrl = "http://localhost:8000/accounts/all/";
@@ -46,6 +48,7 @@ function PropertyForm() {
       body: JSON.stringify(data),
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
       },
     };
     const createPropertyResponse = await fetch(propertyUrl, fetchOptions);

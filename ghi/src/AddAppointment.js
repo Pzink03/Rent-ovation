@@ -83,12 +83,12 @@ function AppointmentForm() {
             <textarea
               onChange={handleChangeIssue}
               value={issue}
-              placeholder="Issue"
+              placeholder="Please explain your reason for booking the appointment"
               required
               type="text"
               name="name"
               id="name"
-              className="input"
+              className="issue-input"
             />
           </div>
 

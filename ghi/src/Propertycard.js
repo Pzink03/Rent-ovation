@@ -1,13 +1,23 @@
 import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
+import { useAuthContext } from "@galvanize-inc/jwtdown-for-react";
 
 function PropertyCard() {
   const [properties, setProperties] = useState([]);
+  const { token } = useAuthContext();
 
   const getProperties = async () => {
-    const propertiesResponse = await fetch("http://localhost:8000/property/");
-    if (propertiesResponse.ok) {
-      const properties = await propertiesResponse.json();
+    const propertiesUrl = "http://localhost:8000/property/user";
+    const fetchOptions = {
+      method: "get",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const propertyResponse = await fetch(propertiesUrl, fetchOptions);
+    if (propertyResponse.ok) {
+      const properties = await propertyResponse.json();
       console.log(properties);
       setProperties(properties);
     }

@@ -1,78 +1,102 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import useToken from "@galvanize-inc/jwtdown-for-react";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 const LoginForm = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [userType, setUserType] = useState('tenant');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [is_landlord, setIsLandlord] = useState(false);
+  const { login } = useToken();
+  const navigate = useNavigate();
 
-  const handleEmailChange = (event) => {
-    setEmail(event.target.value);
-  };
-
-  const handlePasswordChange = (event) => {
-    setPassword(event.target.value);
-  };
-
-  const handleUserTypeChange = (event) => {
-    setUserType(event.target.value);
-  };
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-
-    const formData = new URLSearchParams();
-    formData.append('grant_type', 'password');
-    formData.append('username', email);
-    formData.append('password', password);
-    formData.append('user_type', userType);
-
-    try {
-      const response = await axios.post('http://localhost:3000/login', formData.toString(), {
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded'
-        }
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const username = email;
+    login(username, password)
+      .then(() => {
+        console.log(
+          `email: ${email} password: ${password} is_landlord: ${is_landlord}`
+        );
+        e.target.reset();
+        if (is_landlord !== true) {
+          navigate("/tenant");
+        } else {
+          // Step 3: Redirect the user to a specific route upon successful login
+          navigate("/landlord");
+        } // Replace "/dashboard" with the desired route
+      })
+      .catch((error) => {
+        console.error("Login failed:", error);
+        // Handle login error if needed
       });
+  };
 
-      const token = response.data.access_token;
-
-      // redirect to another page is login is successful
-      window.location.href = 'http://localhost:3000/dashboard';
-    } catch (error) {
-      console.error('Login failed:', error);
-    }
+  const handleCheck = (e) => {
+    setIsLandlord(e.target.checked);
   };
 
   return (
-    <div>
-      <h2>Login</h2>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="email">Email:</label>
-        <input
-          type="email"
-          id="email"
-          name="email"
-          value={email}
-          onChange={handleEmailChange}
-          required
-        /><br /><br />
-        <label htmlFor="password">Password:</label>
-        <input
-          type="password"
-          id="password"
-          name="password"
-          value={password}
-          onChange={handlePasswordChange}
-          required
-        /><br /><br />
-        <label htmlFor="userType">User Type:</label>
-        <select id="userType" name="userType" value={userType} onChange={handleUserTypeChange}>
-          <option value="tenant">Tenant</option>
-          <option value="landlord">Landlord</option>
-        </select><br /><br />
-        <button type="submit">Login</button>
-      </form>
-    </div>
+    <>
+      <div className="form-background"></div>
+
+      <div className="form-container">
+        <form
+          onSubmit={handleSubmit}
+          className="form-box"
+          id="create-sales-form"
+        >
+          <h1 className="form-title">Login</h1>
+
+          <label className="label" htmlFor="name">
+            Email:
+          </label>
+          <div className="form-floating">
+            <input
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Email"
+              required
+              type="text"
+              name="name"
+              id="name"
+              className="input"
+            />
+          </div>
+          <label className="label" htmlFor="picture_url">
+            Password:
+          </label>
+          <div className="form-floating mb-3">
+            <input
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Password"
+              required
+              type="text"
+              name="address"
+              id="address"
+              className="input"
+            />
+          </div>
+          <label className="label" htmlFor="name">
+            Landlord?
+          </label>
+          <div className="form-floating">
+            <input
+              onChange={handleCheck}
+              placeholder="Email"
+              required
+              type="checkbox"
+              checked={is_landlord}
+              value="landlord"
+              className="input"
+            />
+          </div>
+          <div className="mb-3">
+            <div className="btn-form-container">
+              <button className="btn btn-form">Create</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </>
   );
 };
 

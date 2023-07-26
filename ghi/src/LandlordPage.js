@@ -5,6 +5,7 @@ import appointmentlogo from "./img/appointmentlogo.png";
 import { NavLink } from "react-router-dom";
 import PropertyCard from "./Propertycard";
 import AppointmentCard from "./AppointmentCard";
+import LogoutSidebarIcon from "./img/LogoutSidebarIcon.png";
 
 function LandlordPage(props) {
   return (
@@ -44,7 +45,11 @@ function LandlordPage(props) {
               <ul className="sidebar-list">
                 <li className="sidebar-list-item">
                   <NavLink className="sidebar-link" href="#">
-                    <img className="sidebar-icon" src={sidebarhome} alt="" />
+                    <img
+                      className="sidebar-icon"
+                      src={LogoutSidebarIcon}
+                      alt=""
+                    />
                     <div className="sidebar-link-text">Logout</div>
                   </NavLink>
                 </li>

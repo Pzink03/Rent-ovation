@@ -482,6 +482,11 @@ body {
   width: 200px;
 }
 
+.issue-input {
+  width: 300px;
+  height: 200px;
+}
+
 h3 {
   margin: 0;
   margin-bottom: 1rem;
