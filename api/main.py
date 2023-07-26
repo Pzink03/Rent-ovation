@@ -1,6 +1,9 @@
-from fastapi import FastAPI, APIRouter
+from fastapi import FastAPI, BackgroundTasks
+from apscheduler.schedulers.background import BackgroundScheduler
+from authenticator import authenticator
 from fastapi.middleware.cors import CORSMiddleware
 from routers import accounts, property, status, rent, appointments
+from queries.rent import RentRepository
 from authenticator import authenticator
 import os
 
@@ -35,3 +38,9 @@ app.include_router(property.router)
 app.include_router(status.router)
 app.include_router(rent.router)
 app.include_router(appointments.router)
+
+
+repo = RentRepository()
+scheduler = BackgroundScheduler()
+scheduler.add_job(repo.daily_update_rent, trigger="cron", hour=0, minute=0)
+scheduler.start()
