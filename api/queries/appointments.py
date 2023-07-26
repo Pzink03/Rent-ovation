@@ -22,20 +22,36 @@ class AppointmentOut(BaseModel):
     property_id: str
 
 
+class AppointmentOutAll(BaseModel):
+    appointment_id: str
+    issue: str
+    created_on: date
+    status_label: str
+    property_id: str
+    property_name: str
+    picture_url: str
+    tenant_id: str
+    tenant_email: str
+
+
+
+
 class LandlordAppointmentOut(BaseModel):
+    landlord_id: str
     appointment_id: str
     issue: str
     created_on: date
     status_id: int
+    status_label: str
     property_id: str
     tenant_id: str
+    tenant_email: str
     name: str
     address: str
     city: str
     state: str
     zipcode: int
     picture_url: Optional[str]
-    description: Optional[str]
 
 
 class AppointmentUpdateIn(BaseModel):
@@ -90,19 +106,22 @@ class AppointmentRepository:
             return Error(message="Create property failed")
 
 
-    def get_all_appointments(self) -> Union[Error, List[AppointmentOut]]:
+    def get_all_appointments(self) -> Union[Error, List[AppointmentOutAll]]:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
                     result = db.execute(
                         """
-                        SELECT id
-                        , issue
-                        , created_on
-                        , property_id
-                        , status_id
-                        FROM appointment
-                        ORDER BY id;
+                        SELECT ap.id AS appointment_id, ap.issue, ap.created_on,
+                        p.id AS property_id, p.name AS property_name,
+                        p.picture_url,
+                        s.status_label,
+                        a.id as tenant_id, a.email AS tenant_email
+                        FROM appointment ap
+                        LEFT OUTER JOIN status s ON (s.id = ap.status_id)
+                        LEFT OUTER JOIN property p ON (p.id = ap.property_id)
+                        LEFT OUTER JOIN accounts a ON (a.id = p.tenant_id)
+                        ORDER BY ap.id;
                         """
                     )
                     return [
@@ -111,7 +130,7 @@ class AppointmentRepository:
                     ]
         except Exception:
             traceback.print_exc()
-            return Error(message="Getting rents failed")
+            return Error(message="Getting appointments failed")
 
 
     def get_all_appointments_for_landlord(self, id) -> Union[Error, List[LandlordAppointmentOut]]:
@@ -120,16 +139,20 @@ class AppointmentRepository:
                 with conn.cursor() as db:
                     result = db.execute(
                         """
-                        SELECT a.id AS landlord_id,
+                        SELECT a1.id AS landlord_id,
                             p.id AS property_id, p.tenant_id, p.name,
                             p.address, p.city, p.state, p.zipcode,
-                            p.picture_url, p.description,
+                            p.picture_url,
+                            a2.email AS tenant_email,
                             ap.id AS appointment_id, ap.issue, ap.created_on,
-                            ap.status_id
-                        FROM accounts a
-                        LEFT OUTER JOIN property p ON(a.id = p.landlord_id)
+                            ap.status_id,
+                            s.status_label
+                        FROM accounts a1
+                        LEFT OUTER JOIN property p ON(a1.id = p.landlord_id)
+                        LEFT OUTER JOIN accounts a2 ON(p.tenant_id=a2.id)
                         LEFT OUTER JOIN appointment ap ON(p.id=ap.property_id)
-                        WHERE a.id = %s
+                        LEFT OUTER JOIN status s ON(ap.status_id=s.id)
+                        WHERE a1.id = %s
                         ORDER BY ap.status_id DESC, ap.created_on ASC
                         """,
                         [id]
@@ -187,12 +210,16 @@ class AppointmentRepository:
 
 
     def record_to_appointment_out(self, record):
-        return AppointmentOut(
-            id=record[0],
+        return AppointmentOutAll(
+            appointment_id=record[0],
             issue=record[1],
             created_on=record[2],
             property_id=record[3],
-            status_id=record[4],
+            property_name=record[4],
+            picture_url=record[5],
+            status_label=record[6],
+            tenant_id=record[7],
+            tenant_email=record[8],
         )
 
 
@@ -207,9 +234,10 @@ class AppointmentRepository:
             state=record[6],
             zipcode=record[7],
             picture_url=record[8],
-            description=record[9],
+            tenant_email=record[9],
             appointment_id=record[10],
             issue=record[11],
             created_on=record[12],
             status_id=record[13],
+            status_label=record[14]
         )

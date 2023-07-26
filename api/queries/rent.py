@@ -20,7 +20,21 @@ class RentOut(BaseModel):
     amount_due: int
     due_date: date
     property_id: str
+
+
+class RentOutAll(BaseModel):
+    rent_id: str
+    amount_due: int
+    due_date: date
+    property_id: str
+    property_name: str
+    landlord_id: str
+    tenant_id: str
+    landlord_email: str
+    tenant_email: str
     status_id: str
+    status_label: str
+
 
 
 class LandlordRentOut(BaseModel):
@@ -96,19 +110,24 @@ class RentRepository:
             return Error(message="Create property failed")
 
 
-    def get_all_rents(self) -> Union[Error, List[RentOut]]:
+    def get_all_rents(self) -> Union[Error, List[RentOutAll]]:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
                     result = db.execute(
                         """
-                        SELECT id
-                        , amount_due
-                        , due_date
-                        , property_id
-                        , status_id
-                        FROM rent
-                        ORDER BY id;
+                        SELECT r.id AS rent_id, r.amount_due, r.due_date
+                        , r.property_id, r.status_id,
+                        p.name AS property_name, p.tenant_id, p.landlord_id,
+                        a1.email AS landlord_email,
+                        a2.email AS tenant_email,
+                        s.status_label
+                        FROM rent r
+                        LEFT OUTER JOIN property p ON (p.id = r.property_id)
+                        LEFT OUTER JOIN accounts a1 ON (a1.id = p.landlord_id)
+                        LEFT OUTER JOIN accounts a2 ON (a2.id = p.tenant_id)
+                        LEFT OUTER JOIN status s ON (s.id = r.status_id)
+                        ORDER BY r.id;
                         """
                     )
                     return [
@@ -221,12 +240,18 @@ class RentRepository:
 
 
     def record_to_rent_out(self, record):
-        return RentOut(
-            id=record[0],
+        return RentOutAll(
+            rent_id=record[0],
             amount_due=record[1],
             due_date=record[2],
             property_id=record[3],
+            property_name=record[5],
+            landlord_id=record[7],
+            tenant_id=record[6],
+            landlord_email=record[8],
+            tenant_email=record[9],
             status_id=record[4],
+            status_label=record[10]
         )
 
 

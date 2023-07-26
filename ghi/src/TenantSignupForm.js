@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useState } from "react";
 
 const TenantSignupForm = () => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleNameChange = (event) => {
     setName(event.target.value);
@@ -22,17 +21,16 @@ const TenantSignupForm = () => {
     event.preventDefault();
 
     try {
-      const response = await axios.post('http://localhost:3000/signup/tenant', {
+      const response = await ("http://localhost:3000/signup/tenant", {
         name,
         email,
-        password
+        password,
       });
 
-      // handles the successful signup
-
-      console.log('Tenant signup successful:', response.data);
+      // Handle the successful signup
+      console.log("Tenant signup successful:", response.data);
     } catch (error) {
-      console.error('Tenant signup failed:', error);
+      console.error("Tenant signup failed:", error);
     }
   };
 

@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useState } from "react";
 
 const LandlordSignupForm = () => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleNameChange = (event) => {
@@ -25,21 +24,21 @@ const LandlordSignupForm = () => {
     setIsSubmitting(true);
 
     try {
-      const response = await axios.post('http://localhost:3000/signup/landlord', {
+      const response = await ("http://localhost:3000/signup/landlord", {
         name,
         email,
         password,
       });
 
-      // handle the successful signup
-      console.log('Landlord signup successful:', response.data);
+      // Handle the successful signup
+      console.log("Landlord signup successful:", response.data);
 
-      // Reset the form fields after successful signup
-      setName('');
-      setEmail('');
-      setPassword('');
+
+      setName("");
+      setEmail("");
+      setPassword("");
     } catch (error) {
-      console.error('Landlord signup failed:', error);
+      console.error("Landlord signup failed:", error);
       // handle error, show error message.
     }
 
@@ -81,6 +80,6 @@ const LandlordSignupForm = () => {
       </form>
     </div>
   );
-};
+}
 
 export default LandlordSignupForm;
