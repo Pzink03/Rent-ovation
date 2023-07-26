@@ -258,6 +258,28 @@ class RentRepository:
             return False
 
 
+    def daily_update_rent(self):
+        try:
+            today = date.today()
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    db.execute(
+                        """
+                        UPDATE rent
+                        SET status_id = CASE
+                            WHEN due_date > %s THEN 2
+                            ELSE 1
+                        END
+                        WHERE status_id != 3
+                        """,
+                        [today]
+                    )
+                    return True
+        except Exception:
+            traceback.print_exc()
+            return False
+
+
     def record_to_rent_out(self, record):
         return RentOutAll(
             rent_id=record[0],

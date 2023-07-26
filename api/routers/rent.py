@@ -67,3 +67,10 @@ def get_rent_from_tenant(
 ):
     id = account_data['id']
     return repo.get_rent_from_tenant(id)
+
+
+@router.post("/daily/")
+def daily_update_rent(
+    repo: RentRepository = Depends(),
+):
+    return repo.daily_update_rent()
