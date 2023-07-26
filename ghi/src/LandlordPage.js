@@ -1,5 +1,5 @@
 import logo from "./img/logo.png";
-import profile1 from "./img/profile1.jpg";
+// import profile1 from "./img/profile1.jpg";
 import sidebarhome from "./img/sidebarhome.png";
 import appointmentlogo from "./img/appointmentlogo.png";
 import { NavLink } from "react-router-dom";

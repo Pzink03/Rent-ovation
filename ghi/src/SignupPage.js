@@ -108,9 +108,3 @@ function SignupForm() {
   );
 }
 export default SignupForm;
-
-{
-  /* <div className={messageClasses} id="success-message">
-            Congratulations on the sale!
-          </div> */
-}

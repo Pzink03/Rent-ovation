@@ -8,7 +8,7 @@ import testimonial_picture1 from "./img/MTestimonial.jpg";
 import testimonial_picture2 from "./img/MTestimonial2.jpg";
 import testimonial_picture3 from "./img/MTestimonial3.jpg";
 import testimonial_picture4 from "./img/MTestimonial4.jpg";
-import testimonial_picture5 from "./img/FMTestimonial.jpg";
+// import testimonial_picture5 from "./img/FMTestimonial.jpg";
 import LoginAboutImage from "./img/LoginCardAboutImage.jpg";
 
 function AboutPage() {

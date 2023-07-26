@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Nav from "./Nav.js";
 import MainPage from "./MainPage.js";
@@ -7,45 +7,24 @@ import PropertyForm from "./AddProperty.js";
 import AppointmentForm from "./AddAppointment.js";
 import SignupForm from "./SignupPage.js";
 import { AuthProvider } from "@galvanize-inc/jwtdown-for-react";
-import LoginForm from "./LoginForm.js";
-// import ErrorNotification from "./ErrorNotification";
+
 import "./css/App.css";
 
 import TenantPage from "./TenantPage.js";
 import AboutPage from "./AboutPage.js";
-import Login from "./LoginForm.js";
-
-import TenantSignupForm from "./TenantSignupForm.js";
-import LandlordSignupForm from "./LandlordSignupForm.js";
+import LoginForm from "./LoginForm.js";
 
 function App() {
-  const baseURL = process.env.REACT_APP_API_HOST;
-  // const [launchInfo, setLaunchInfo] = useState([]);
-  // const [error, setError] = useState(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  // useEffect(() => {
-  //   async function getData() {
-  //     let url = `${process.env.REACT_APP_API_HOST}/api/launch-details`;
-  //     console.log("fastapi url: ", url);
-  //     let response = await fetch(url);
-  //     console.log("------- hello? -------");
-  //     let data = await response.json();
-
-  //     if (response.ok) {
-  //       console.log("got launch data!");
-  //       setLaunchInfo(data.launch_details);
-  //     } else {
-  //       console.log("drat! something happened");
-  //       setError(data.message);
-  //     }
-  //   }
-  //   getData();
-  // }, []);
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+  };
 
   return (
     <BrowserRouter>
       <AuthProvider baseUrl="http://localhost:8000">
-        <Nav />
+        <Nav isLoggedIn={isLoggedIn} handleLogout={handleLogout} />
 
         <div>
           <Routes>
@@ -56,7 +35,10 @@ function App() {
             <Route path="/about" element={<AboutPage />} />
             <Route path="/add-appointment" element={<AppointmentForm />} />
             <Route path="/signup" element={<SignupForm />} />
-            <Route path="/login" element={<LoginForm />} />
+            <Route
+              path="/login"
+              element={<LoginForm setIsLoggedIn={setIsLoggedIn} />}
+            />
           </Routes>
         </div>
       </AuthProvider>

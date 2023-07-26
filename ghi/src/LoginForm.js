@@ -2,7 +2,7 @@ import useToken from "@galvanize-inc/jwtdown-for-react";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
-const LoginForm = () => {
+const LoginForm = ({ setIsLoggedIn }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [is_landlord, setIsLandlord] = useState(false);
@@ -17,17 +17,16 @@ const LoginForm = () => {
         console.log(
           `email: ${email} password: ${password} is_landlord: ${is_landlord}`
         );
-        e.target.reset();
+        setIsLoggedIn(true);
+
         if (is_landlord !== true) {
           navigate("/tenant");
         } else {
-          // Step 3: Redirect the user to a specific route upon successful login
           navigate("/landlord");
-        } // Replace "/dashboard" with the desired route
+        }
       })
       .catch((error) => {
         console.error("Login failed:", error);
-        // Handle login error if needed
       });
   };
 
@@ -100,4 +99,4 @@ const LoginForm = () => {
   );
 };
 
-export default Login;
+export default LoginForm;
