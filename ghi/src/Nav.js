@@ -11,7 +11,6 @@ function Nav() {
   // console.log(account);
   const { token } = useAuthContext();
   console.log(token);
-
   const [account, setAccount] = useState([]);
 
   const getToken = async () => {
@@ -33,7 +32,7 @@ function Nav() {
   console.log(account);
   useEffect(() => {
     getToken();
-    console.log(token);
+    console.log(account);
   }, [token]);
 
   return (
