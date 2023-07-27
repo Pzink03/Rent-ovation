@@ -1,10 +1,10 @@
+import React, { useState, useEffect } from 'react';
 import logo from "./img/logo.png";
-
 import sidebarhome from "./img/sidebarhome.png";
 import appointmentlogo from "./img/appointmentlogo.png";
 import { NavLink } from "react-router-dom";
 import PropertyCard from "./Propertycard";
-
+import AppointmentHistoryPage from './AppointmentHistoryPage';
 function LandlordPage(props) {
   return (
     <>
@@ -27,13 +27,10 @@ function LandlordPage(props) {
                     <div className="sidebar-link-text">Add Property</div>
                   </NavLink>
                 </li>
+                {/* link for the appointment history */}
                 <li className="sidebar-list-item">
-                  <NavLink className="sidebar-link" href="#">
-                    <img
-                      className="sidebar-icon"
-                      src={appointmentlogo}
-                      alt=""
-                    />
+                  <NavLink className="sidebar-link" to="/appointment-history">
+                    <img className="sidebar-icon" src={appointmentlogo} alt="" />
                     <div className="sidebar-link-text">Appointment History</div>
                   </NavLink>
                 </li>
@@ -50,7 +47,8 @@ function LandlordPage(props) {
               </ul>
             </div>
           </aside>
-          <PropertyCard />
+          {window.location.pathname === '/property' && <PropertyCard />}
+          {window.location.pathname === '/appointment-history' && <AppointmentHistoryPage />}
         </header>
       </div>
       <footer>

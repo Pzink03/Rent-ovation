@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from authenticator import authenticator
 from fastapi.middleware.cors import CORSMiddleware
 from routers import accounts, property, status, rent, appointments
+from routers.appointment_history import router as appointment_history_router
 from authenticator import authenticator
 import os
 
@@ -18,6 +19,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
 @app.get("/api/launch-details")
 def launch_details():
     return {
@@ -30,7 +32,9 @@ def launch_details():
         }
     }
 
+
 app.include_router(property.router)
 app.include_router(status.router)
 app.include_router(rent.router)
 app.include_router(appointments.router)
+app.include_router(appointment_history_router)
