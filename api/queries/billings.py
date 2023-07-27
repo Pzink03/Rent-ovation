@@ -11,7 +11,6 @@ class Error(BaseModel):
 
 
 class BillingsIn(BaseModel):
-    tenant_id: Optional[int]
     name: str
     card_number: int
     expirydate: int
@@ -47,7 +46,7 @@ class BillingsRepository:
                     result = db.execute(
                         """
                         INSERT INTO billings
-                            ( tenant_id, name, card_number, expirydate, cvv)
+                            (tenant_id, name, card_number, expirydate, cvv)
                         VALUES
                             (%s,%s,%s,%s,%s)
                         RETURNING id;
@@ -65,7 +64,7 @@ class BillingsRepository:
                     id = result.fetchone()[0]
                     return BillingsOut(
                         id=id,
-                        tenant_id=str(billings.tenant_id),
+                        tenant_id=str(tenant_id),
                         name=billings.name,
                         card_number=billings.card_number,
                         expirydate=billings.expirydate,
@@ -114,15 +113,13 @@ class BillingsRepository:
                     db.execute(
                     """
                         UPDATE billings
-                        SET tenant_id = %s 
-                        , name = %s
+                        SET , name = %s
                         , card_number = %s
                         , expirydate = %s
                         , cvv = %s
                         WHERE id = %s
                     """,
                     [
-                        billings.tenant_id,
                         billings.name,
                         billings.card_number,
                         billings.expirydate,
@@ -132,7 +129,6 @@ class BillingsRepository:
                 )
                 return BillingsUpdate(
                     id=billings_id,
-                    tenant_id=str(billings.tenant_id),
                     name=billings.name,
                     card_number=billings.card_number,
                     expirydate=billings.expirydate,

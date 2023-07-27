@@ -21,7 +21,7 @@ def create_billings(
     
 ):
     tenant_id = account_data["id"]
-    billings_obj = repo.create(billings, int(tenant_id))
+    billings_obj = repo.create_billings(billings, int(tenant_id))
     return billings_obj
 
     
