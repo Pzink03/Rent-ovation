@@ -17,6 +17,7 @@ from queries.accounts import (
     AccountOut,
     AccountRepository,
     DuplicateAccountError,
+    AccountInTest,
 )
 
 
@@ -65,14 +66,19 @@ async def get_token(
 
 @router.post("/api/accounts", response_model=AccountToken | HttpError)
 async def create_account(
-    info: AccountIn,
+    info: AccountInTest,
     request: Request,
     response: Response,
     accounts: AccountRepository = Depends(),
 ):
     hashed_password = authenticator.hash_password(info.password)
     try:
-        account = accounts.create(info, hashed_password)
+        account_in = AccountIn(
+            email=info.email,
+            password=info.password,
+            is_landlord=info.is_landlord,
+        )
+        account = accounts.create(account_in, hashed_password)
     except DuplicateAccountError:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
@@ -80,4 +86,5 @@ async def create_account(
         )
     form = AccountForm(username=info.email, password=info.password)
     token = await authenticator.login(response, request, form, accounts)
+
     return AccountToken(account=account, **token.dict())

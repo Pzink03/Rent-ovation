@@ -1,4 +1,5 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, BackgroundTasks
+from apscheduler.schedulers.background import BackgroundScheduler
 from authenticator import authenticator
 from fastapi.middleware.cors import CORSMiddleware
 from routers import accounts, property, status, rent, appointments
@@ -6,10 +7,10 @@ from routers.appointment_history import router as appointment_history_router
 from authenticator import authenticator
 import os
 
+
 app = FastAPI()
 app.include_router(authenticator.router)
 app.include_router(accounts.router)
-
 
 app.add_middleware(
     CORSMiddleware,

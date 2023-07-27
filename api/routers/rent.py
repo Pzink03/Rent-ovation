@@ -6,6 +6,7 @@ from queries.rent import (
     RentIn,
     RentOut,
     RentUpdate,
+    RentOutAll,
     LandlordRentOut,
     TenantRentOut,
     RentRepository,
@@ -43,7 +44,7 @@ def delete_rent(
     return repo.delete_rent(rent_id)
 
 
-@router.get("/rent/", response_model = List[RentOut])
+@router.get("/rent/", response_model = List[RentOutAll])
 def get_all_rents(
     repo: RentRepository = Depends(),
 ):
@@ -66,3 +67,10 @@ def get_rent_from_tenant(
 ):
     id = account_data['id']
     return repo.get_rent_from_tenant(id)
+
+
+@router.post("/daily/")
+def daily_update_rent(
+    repo: RentRepository = Depends(),
+):
+    return repo.daily_update_rent()

@@ -1,55 +1,95 @@
-import React, { useState } from "react";
+import useToken from "@galvanize-inc/jwtdown-for-react";
+import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useAuthContext } from "@galvanize-inc/jwtdown-for-react";
 
-const Login = () => {
+function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [userType, setUserType] = useState("tenant");
-  const handleLogin = (e) => {
+  const { login } = useToken();
+  const { token } = useAuthContext();
+  const navigate = useNavigate();
+  console.log(token);
+  const getToken = async () => {
+    const tokenUrl = "http://localhost:8000/token";
+    const fetchOptions = {
+      method: "get",
+      credentials: "include",
+    };
+    const tokenResponse = await fetch(tokenUrl, fetchOptions);
+    if (tokenResponse.ok) {
+      const token = await tokenResponse.json();
+      if (token !== null) {
+        console.log(token.account);
+        if (token.account.is_landlord !== true) {
+          navigate("/tenant");
+        } else {
+          navigate("/landlord");
+        }
+      }
+    }
+  };
+
+  useEffect(() => {
+    getToken();
+  }, [token]);
+
+  const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Email:", email);
-    console.log("Password:", password);
-    console.log("User Type:", userType);
+    const username = email;
+    login(username, password);
+    e.target.reset();
   };
 
   return (
-    <div>
-      <h2>Login</h2>
-      <form onSubmit={handleLogin}>
-        <div>
-          <label htmlFor="email">Email:</label>
-          <input
-            type="email"
-            id="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="password">Password:</label>
-          <input
-            type="password"
-            id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="userType">Select user type:</label>
-          <select
-            id="userType"
-            value={userType}
-            onChange={(e) => setUserType(e.target.value)}
-          >
-            <option value="tenant">Tenant</option>
-            <option value="landlord">Landlord</option>
-          </select>
-        </div>
-        <button type="submit">Login</button>
-      </form>
-    </div>
-  );
-};
+    <>
+      <div className="form-background"></div>
 
-export default Login;
+      <div className="form-container">
+        <form
+          onSubmit={handleSubmit}
+          className="form-box"
+          id="create-sales-form"
+        >
+          <h1 className="form-title">Login</h1>
+
+          <label className="label" htmlFor="name">
+            Email:
+          </label>
+          <div className="form-floating">
+            <input
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Email"
+              required
+              type="text"
+              name="name"
+              id="name"
+              className="input"
+            />
+          </div>
+          <label className="label" htmlFor="picture_url">
+            Password:
+          </label>
+          <div className="form-floating mb-3">
+            <input
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Password"
+              required
+              type="text"
+              name="address"
+              id="address"
+              className="input"
+            />
+          </div>
+          <div className="mb-3">
+            <div className="btn-form-container">
+              <button className="btn btn-form">Create</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </>
+  );
+}
+
+export default LoginForm;
