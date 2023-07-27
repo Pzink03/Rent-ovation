@@ -8,6 +8,7 @@ from psycopg import AsyncConnection
 from psycopg.rows import class_row
 from pydantic import BaseModel
 
+
 LATEST = {}
 ZERO = {}
 
