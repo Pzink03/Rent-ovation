@@ -1,6 +1,7 @@
 import os
 from fastapi import APIRouter, Depends
 from typing import Union, List
+from authenticator import AccountAuthenticator
 from queries.billings import (
     Error,
     BillingsIn,
@@ -8,17 +9,21 @@ from queries.billings import (
     BillingsUpdate,
     BillingsRepository,
 )
-from authenticator import AccountAuthenticator
+authenticator = AccountAuthenticator(os.environ["SIGNING_KEY"])
 router = APIRouter()
 
 
-@router.post("/create/billings/", response_model= Union[BillingsOut, Error])
+@router.post("/create/billings", response_model= Union[BillingsOut, Error])
 def create_billings(
     billings: BillingsIn,
     repo: BillingsRepository = Depends(),
+    account_data: dict = Depends(authenticator.get_current_account_data),
     
 ):
-    return repo.create_billings(billings)
+    tenant_id = account_data["id"]
+    billings_obj = repo.create(billings, int(tenant_id))
+    return billings_obj
+
     
 
 

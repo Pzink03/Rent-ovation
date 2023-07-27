@@ -6,7 +6,7 @@ steps = [
             tenant_id INT UNIQUE REFERENCES accounts(id),
             name VARCHAR(1000) NOT NULL,
             card_number VARCHAR(16) NOT NULL,
-            expirydate DATE NOT NULL (expirydate = DATE_TRUNC('MONTH', expirydate)),
+            expirydate VARCHAR(7) NOT NULL,  
             cvv VARCHAR(3) NOT NULL
         );
         """,

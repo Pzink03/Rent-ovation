@@ -22,7 +22,7 @@ function TenantPage() {
           <li className="feature">Would You Like To Make An Appointment?</li>
 
           <div className="btn-container">
-            <NavLink className="btn btn-animation tenant-btn" to="/tenant">
+            <NavLink className="btn btn-animation tenant-btn" to="/billings">
               Pay Rent
             </NavLink>
             <NavLink className="btn btn-animation tenant-btn" to="/tenant">

@@ -1,5 +1,5 @@
 import "./css/billings.css";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 
 function BillingsPage() {
@@ -25,18 +25,18 @@ function BillingsPage() {
         setCvv(value);
     }
         const handleSubmit = async (event) => {
-        event.preventDefault();
-        const data = {};
-        data.name = name;
-        data.card_number = card_number;
-        data.expirydate = expirydate;
-        data.cvv = cvv;
-        console.log(data);
-        const url = 'http://localhost:8000/create/billings/';
-        const fetchConfig = {
-            method: "post",
-            body: JSON.stringify(data),
-            headers: {
+            event.preventDefault();
+            const data = {};
+            data.name = name;
+            data.card_number = card_number;
+            data.expirydate = expirydate;
+            data.cvv = cvv;
+            console.log(data);
+            const url = 'http://localhost:8000/create/billings/';
+            const fetchConfig = {
+                method: "post",
+                body: JSON.stringify(data),
+                headers: {
                 'Content-Type': 'application/json',
             },
         };
@@ -63,7 +63,7 @@ function BillingsPage() {
                             <label for="name">Name</label>
                             <input
                                 onChange={(e) => setName(e.target.value)}
-                                placeholder="Name"
+                                placeholder="John M. Doe"
                                 required
                                 type="text"
                                 name="name"
@@ -76,7 +76,7 @@ function BillingsPage() {
                             <label for="card_number">Card Number</label>
                             <input
                                 onChange={(e) => setCard_number(e.target.value)}
-                                placeholder="Card_number"
+                                placeholder="1111222233334444"
                                 required
                                 type="text"
                                 name="card_number"
@@ -85,35 +85,26 @@ function BillingsPage() {
                                 value={card_number}
                             />
                         </div>
-                        <div class="card-logo-input">
-                            <i className="fab fa-cc-visa" style={{ color: "navy" }}></i>
-                            <i className="fab fa-cc-mastercard" style={{ color: "blue" }}></i>
-                            <i className="fab fa-cc-amex" style={{ color: "red" }}></i>
-                            <i className="fab fa-cc-discover" style={{ color: "orange" }}></i>
-
-                        </div>
                         <div className="form-row">
                             <div class="form-group">
                             <label for="expiry_date">Expiry Date</label>
                             <input
                                 onChange={(e) => setExpirydate(e.target.value)}
-                                placeholder="Expirydate"
+                                placeholder="MMYYYY"
                                 required
-                                type="month"
+                                type="text"
                                 name="expirydate"
                                 id="expirydate"
                                 className="form-control"
                                 value={expirydate}
-                                max="9999-12"
-                                min="0001-01"
                             />
                             
                         </div>
-                        <div className="form-floating mb-3">
+                        <div className="form-group">
                             <label htmlFor="cvv">CVV</label>
                             <input
                                 onChange={(e) => setCvv(e.target.value)}
-                                placeholder="Cvv"
+                                placeholder="123"
                                 required
                                 type="text"
                                 name="cvv"
@@ -129,6 +120,7 @@ function BillingsPage() {
             </div>
         </div>
         </div>
+
     </>
     );
 }; 
