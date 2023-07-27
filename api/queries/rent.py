@@ -267,7 +267,7 @@ class RentRepository:
                         """
                         UPDATE rent
                         SET status_id = CASE
-                            WHEN due_date > %s THEN 2
+                            WHEN due_date < %s THEN 2
                             ELSE 1
                         END
                         WHERE status_id != 3
