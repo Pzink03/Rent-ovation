@@ -40,7 +40,7 @@ function AboutPage() {
                   </li>
 
                   <div className="btn-container">
-                    <NavLink className="btn btn-animation" to="/tenant">
+                    <NavLink className="btn btn-animation" to="/signup">
                       Sign Up
                     </NavLink>
                   </div>
@@ -62,7 +62,7 @@ function AboutPage() {
                   <li className="feature">Manage Appointments With Tenants</li>
 
                   <div className="btn-container">
-                    <NavLink className="btn btn-animation" to="/landlord">
+                    <NavLink className="btn btn-animation" to="/signup">
                       Sign Up
                     </NavLink>
                   </div>
@@ -83,7 +83,7 @@ function AboutPage() {
                   </li>
 
                   <div className="btn-container">
-                    <NavLink className="btn btn-animation" to="/landlord">
+                    <NavLink className="btn btn-animation" to="/login">
                       Login
                     </NavLink>
                   </div>
@@ -166,7 +166,7 @@ function AboutPage() {
         <h2 className="section-title">Want to know more?</h2>
         {/* <p className="free-sub-title">Want to learn more about our team?</p> */}
         <div className="btn-container contact">
-          <NavLink className="contact-btn btn" to="#">
+          <NavLink className="contact-btn btn" to="/landlord">
             Contact Us!
           </NavLink>
         </div>

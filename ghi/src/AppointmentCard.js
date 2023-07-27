@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
-// import profile1 from "./img/profile1.jpg";
+import profile1 from "./img/profile1.jpg";
 import header_image from "./img/header_image.jpg";
 
 function AppointmentCard() {

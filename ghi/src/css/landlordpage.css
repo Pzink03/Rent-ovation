@@ -165,6 +165,7 @@ body {
   display: none;
   color: var(--light-blue-color);
   font-size: 1rem;
+  font-family: "Dancing Script", cursive;
 }
 
 .sidebar-list-item {
@@ -194,6 +195,7 @@ body {
   color: var(--light-blue-color);
   font-size: 0.75rem;
   font-weight: bold;
+  font-family: "Dancing Script", cursive;
 }
 
 /* .sidebar-list-item.active::before {
@@ -262,6 +264,7 @@ body {
   margin-bottom: 1.5rem;
   justify-content: center;
   align-items: center;
+  font-family: "Pacifico", cursive;
 }
 
 .property-name {
@@ -270,6 +273,7 @@ body {
   margin-bottom: 0.5rem;
   justify-content: center;
   align-items: center;
+  font-family: "Oswald", sans-serif;
 }
 
 .property-card:hover {
@@ -284,10 +288,16 @@ body {
   padding: 0;
 }
 
+.property-label {
+  font-family: "Pacifico", cursive;
+}
+
 .property-feature {
   margin-bottom: 0.5rem;
   flex-direction: column;
   padding: 0.3rem;
+  font-family: "Consolas", monospace;
+
   font-size: 1.25rem;
   align-self: flex-start;
 }

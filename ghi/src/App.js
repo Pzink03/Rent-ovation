@@ -46,18 +46,16 @@ function App() {
       <AuthProvider baseUrl="http://localhost:8000">
         <Nav />
 
-        <div>
-          <Routes>
-            <Route path="/" element={<MainPage />} />
-            <Route path="/landlord" element={<LandlordPage />} />
-            <Route path="/property" element={<PropertyForm />} />
-            <Route path="/tenant" element={<TenantPage />} />
-            <Route path="/about" element={<AboutPage />} />
-            <Route path="/add-appointment" element={<AppointmentForm />} />
-            <Route path="/signup" element={<SignupForm />} />
-            <Route path="/login" element={<LoginForm />} />
-          </Routes>
-        </div>
+        <Routes>
+          <Route path="/" element={<MainPage />} />
+          <Route path="/landlord" element={<LandlordPage />} />
+          <Route path="/property" element={<PropertyForm />} />
+          <Route path="/tenant" element={<TenantPage />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/add-appointment" element={<AppointmentForm />} />
+          <Route path="/signup" element={<SignupForm />} />
+          <Route path="/login" element={<LoginForm />} />
+        </Routes>
       </AuthProvider>
     </BrowserRouter>
   );

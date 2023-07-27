@@ -6,8 +6,10 @@ import { NavLink } from "react-router-dom";
 import PropertyCard from "./Propertycard";
 import AppointmentCard from "./AppointmentCard";
 import LogoutSidebarIcon from "./img/LogoutSidebarIcon.png";
+import useToken from "@galvanize-inc/jwtdown-for-react";
 
-function LandlordPage(props) {
+function LandlordPage() {
+  const { logout } = useToken();
   return (
     <>
       <div className="">
@@ -44,7 +46,11 @@ function LandlordPage(props) {
             <div className="bottom-sidebar">
               <ul className="sidebar-list">
                 <li className="sidebar-list-item">
-                  <NavLink className="sidebar-link" href="#">
+                  <NavLink
+                    className="sidebar-link"
+                    to="/"
+                    onClick={() => logout()}
+                  >
                     <img
                       className="sidebar-icon"
                       src={LogoutSidebarIcon}

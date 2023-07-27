@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 function SignupForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [is_landlord, setIsLandlord] = useState(false);
+  const [is_landlord, setIsLandlord] = useState(null);
   const [account, setAccount] = useState(null);
   const navigate = useNavigate();
   const { register } = useToken();
@@ -65,10 +65,12 @@ function SignupForm() {
     console.log(data);
     getToken();
 
-    if (is_landlord !== true) {
+    if (is_landlord === false) {
       navigate("/tenant");
-    } else {
+    } else if (is_landlord === true) {
       navigate("/landlord");
+    } else {
+      console.error("Invalid Value");
     }
   };
   //   useEffect(() => {
@@ -137,20 +139,23 @@ function SignupForm() {
               className="input"
             />
           </div>
-          <div className="mb-3">
+          <div className="form-floating mb-3">
             <label className="form-label">Are you a landlord?</label>
             <select
               className="form-select"
-              value={is_landlord ? "yes" : "no"}
+              placeholder="--"
+              value={is_landlord === null ? "--" : is_landlord ? "yes" : "no"}
               onChange={handleLandlordChange}
+              required
             >
+              <option value="--">--</option>
               <option value="yes">Yes</option>
               <option value="no">No</option>
             </select>
           </div>
           <div className="mb-3">
-            <div className="btn-form-container">
-              <button className="btn btn-form">Create</button>
+            <div className="btn-form-container ">
+              <button className="btn btn-form">Sign Up</button>
             </div>
           </div>
         </form>
