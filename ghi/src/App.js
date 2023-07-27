@@ -45,13 +45,9 @@ function App() {
         <Routes>
           <Route path="/" element={<MainPage />} />
           <Route path="/landlord" element={<LandlordPage />} />
-<<<<<<< HEAD
           <Route path="/appointment-history" element={<AppointmentHistoryPage />} />
           <Route path="/tenant-signup" element={<TenantSignupForm />} />
           <Route path="/landlord-signup" element={<LandlordSignupForm />} />
-=======
-          <Route path="/property" element={<PropertyForm />} />
->>>>>>> cb3b701695b6e61886457c7bdd3760c6fa2497f1
           <Route path="/tenant" element={<TenantPage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/add-appointment" element={<AppointmentForm />} />
