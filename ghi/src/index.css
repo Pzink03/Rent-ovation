@@ -464,7 +464,6 @@ body {
 
 .testimonial-grid-item.appointments {
   display: block;
-  grid-column: span 2;
 }
 
 .btn-container.appointments {
@@ -472,10 +471,13 @@ body {
   font-size: 1rem;
   justify-content: center;
   align-items: flex-end;
+  padding: 20px 0 10px 0;
 }
 
 .appointment-issue {
   text-align: center;
+  margin-bottom: 10px;
+  font-family: "Pacifico", cursive;
 }
 
 .testimonial-text.container.appointments {
@@ -495,6 +497,26 @@ body {
 .issue-input {
   width: 300px;
   height: 200px;
+}
+
+.appointment-issue.created-on {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  font-size: 0.75rem;
+  padding: 15px 10px 5px 0;
+}
+
+.appointment-issue-title {
+  text-align: center;
+  font-family: "Oswald", sans-serif;
+}
+
+.landlord-sub-title-container {
+  display: grid;
+  grid-column: span 4;
+  justify-content: center;
+  align-items: center;
 }
 
 h3 {
@@ -580,13 +602,6 @@ h3 {
   100% {
     transform: scale(1);
   }
-}
-
-/* Font */
-@font-face {
-  font-family: Masc;
-  src: url(https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap)
-    format("truetype");
 }
 
 /* Converting to a smaller screen */

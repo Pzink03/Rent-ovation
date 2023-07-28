@@ -12,7 +12,6 @@ function Nav() {
   // console.log(account);
   const { token } = useAuthContext();
   const { logout } = useToken();
-  console.log(token);
 
   const [account, setAccount] = useState([]);
 
@@ -35,7 +34,6 @@ function Nav() {
   console.log(account);
   useEffect(() => {
     getToken();
-    console.log(token);
   }, [token]);
 
   return (

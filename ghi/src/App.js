@@ -8,6 +8,7 @@ import AppointmentForm from "./AddAppointment.js";
 import SignupForm from "./SignupPage.js";
 import { AuthProvider } from "@galvanize-inc/jwtdown-for-react";
 import useToken from "@galvanize-inc/jwtdown-for-react";
+import RentForm from "./AddRent.js";
 
 import "./css/App.css";
 
@@ -54,6 +55,7 @@ function App() {
           <Route path="/about" element={<AboutPage />} />
           <Route path="/add-appointment" element={<AppointmentForm />} />
           <Route path="/signup" element={<SignupForm />} />
+          <Route path="/rent" element={<RentForm />} />
           <Route path="/login" element={<LoginForm />} />
         </Routes>
       </AuthProvider>

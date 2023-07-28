@@ -26,7 +26,7 @@ function AppointmentForm() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = {};
-    data.status_label = status;
+    data.status_id = status;
     data.issue = issue;
     console.log(data);
 
