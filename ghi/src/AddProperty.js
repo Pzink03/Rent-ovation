@@ -12,6 +12,7 @@ function PropertyForm() {
   const [zipcode, setZipcode] = useState("");
   const [pictureUrl, setPictureUrl] = useState("");
   const [description, setDescription] = useState("");
+  const [tenant_ids, setTenants] = useState([]);
   const { token } = useAuthContext();
 
   const fetchData = async () => {
@@ -22,6 +23,15 @@ function PropertyForm() {
       const accountsData = await accountsResponse.json();
       console.log(accountsData);
       setAccounts(accountsData);
+    }
+
+    const propertyURL = "http://localhost:8000/property/";
+    const propertyResponse = await fetch(propertyURL);
+    if (propertyResponse.ok) {
+      const propertyData = await propertyResponse.json();
+      const tenant_array = propertyData.map((property) => [property.tenant_id]);
+      console.log(tenant_array.flat());
+      setTenants(tenant_array.flat());
     }
   };
 
@@ -230,13 +240,16 @@ function PropertyForm() {
                 className="form-select"
               >
                 <option value="">Choose a Tenant</option>
-                {accounts.map((account) => {
-                  return (
-                    <option key={account.id} value={account.id}>
-                      {account.email}
-                    </option>
-                  );
-                })}
+                {accounts
+                  .filter((account) => account.is_landlord !== true)
+                  .filter((account) => !tenant_ids.includes(account.id))
+                  .map((account) => {
+                    return (
+                      <option key={account.id} value={account.id}>
+                        {account.email}
+                      </option>
+                    );
+                  })}
               </select>
             </div>
             <div className="btn-form-container">
