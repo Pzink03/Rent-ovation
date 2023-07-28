@@ -2,8 +2,7 @@ from fastapi import FastAPI, BackgroundTasks
 from apscheduler.schedulers.background import BackgroundScheduler
 from authenticator import authenticator
 from fastapi.middleware.cors import CORSMiddleware
-from routers import accounts, property, status, rent, appointments
-from routers.appointment_history import router as appointment_history_router
+from routers import accounts, property, status, rent, appointments, billings
 from authenticator import authenticator
 import os
 
@@ -32,8 +31,7 @@ def launch_details():
             "min": "00",
         }
     }
-
-
+app.include_router(billings.router)
 app.include_router(property.router)
 app.include_router(status.router)
 app.include_router(rent.router)

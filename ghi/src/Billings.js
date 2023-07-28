@@ -1,7 +1,7 @@
 import "./css/billings.css";
-import React, { useState } from "react";
-import logo from "./img/logo.png";
+import React, { useState, useEffect } from "react";
 import { useAuthContext } from "@galvanize-inc/jwtdown-for-react";
+
 
 function BillingsPage() {
     const [name, setName] = useState([]);
@@ -9,7 +9,6 @@ function BillingsPage() {
     const [expirydate, setExpirydate] = useState([]);
     const [cvv, setCvv] = useState([]);
     const { token } = useAuthContext();
-
 
     const handleNameChange = (event) => {
         const value = event.target.value;
@@ -35,9 +34,8 @@ function BillingsPage() {
             data.expirydate = expirydate;
             data.cvv = cvv;
             console.log(data);
-            
-            const billingsUrl = 'http://localhost:8000/create/billings/';
-            const fetchOptions = {
+            const url = 'http://localhost:8000/create/billings/';
+            const fetchConfig = {
                 method: "post",
                 body: JSON.stringify(data),
                 headers: {
@@ -45,7 +43,7 @@ function BillingsPage() {
                 Authorization: `Bearer ${token}`,
             },
         };
-        const createBillingsResponse = await fetch(billingsUrl, fetchOptions);
+        const createBillingsResponse = await fetch(url, fetchConfig);
         if (createBillingsResponse.ok) {
             setName('');
             setCard_number('');
