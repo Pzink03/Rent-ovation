@@ -34,8 +34,15 @@ function TenantPropertyCard() {
     const propertyResponse = await fetch(propertiesUrl, fetchOptions);
     if (propertyResponse.ok) {
       const properties = await propertyResponse.json();
-      console.log(properties);
-      setProperties(properties);
+      if (
+        typeof properties === "object" &&
+        properties.hasOwnProperty("message")
+      ) {
+        setProperties([]);
+      } else {
+        console.log(properties);
+        setProperties(properties);
+      }
     }
   };
 
@@ -46,7 +53,7 @@ function TenantPropertyCard() {
   return (
     <div className="landlord-cards-container">
       {properties.length === 0 ? (
-        <div>
+        <div className="landlord-sub-title-container">
           <h1 className="sub-title">
             You don't have a property assigned to your account. <br></br>Speak
             with your landlord about adding one
@@ -63,7 +70,7 @@ function TenantPropertyCard() {
                 alt=""
               />
             </div>
-            <div className="property-feature">{property.property_name}</div>
+            <div className="property-feature">{property.name}</div>
             <div className="property-feature">{property.address}</div>
             <div className="property-feature">{property.city}</div>
             <div className="property-feature">{property.state}</div>

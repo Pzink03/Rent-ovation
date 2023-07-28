@@ -13,18 +13,27 @@ function PropertyForm() {
   const [pictureUrl, setPictureUrl] = useState("");
   const [description, setDescription] = useState("");
   const { token } = useAuthContext();
+  const [tenant_ids, setTenants] = useState([]);
 
   const fetchData = async () => {
-    const accountsUrl = "http://localhost:8000/accounts/all/";
+    const propertyURL = "http://localhost:8000/property/";
+    const propertyResponse = await fetch(propertyURL);
+    if (propertyResponse.ok) {
+      const propertyData = await propertyResponse.json();
+      const tenant_array = propertyData.map((property) => [property.tenant_id]);
+      console.log(tenant_array.flat());
+      setTenants(tenant_array.flat());
 
-    const accountsResponse = await fetch(accountsUrl);
-    if (accountsResponse.ok) {
-      const accountsData = await accountsResponse.json();
-      console.log(accountsData);
-      setAccounts(accountsData);
+      const accountsUrl = "http://localhost:8000/accounts/all/";
+
+      const accountsResponse = await fetch(accountsUrl);
+      if (accountsResponse.ok) {
+        const accountsData = await accountsResponse.json();
+        console.log(accountsData);
+        setAccounts(accountsData);
+      }
     }
   };
-
   useEffect(() => {
     fetchData();
   }, []);
@@ -230,13 +239,16 @@ function PropertyForm() {
                 className="form-select"
               >
                 <option value="">Choose a Tenant</option>
-                {accounts.map((account) => {
-                  return (
-                    <option key={account.id} value={account.id}>
-                      {account.email}
-                    </option>
-                  );
-                })}
+                {accounts
+                  .filter((account) => account.is_landlord !== true)
+                  .filter((account) => !tenant_ids.includes(account.id))
+                  .map((account) => {
+                    return (
+                      <option key={account.id} value={account.id}>
+                        {account.email}
+                      </option>
+                    );
+                  })}
               </select>
             </div>
             <div className="btn-form-container">

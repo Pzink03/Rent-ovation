@@ -40,14 +40,6 @@ function LandlordPage() {
                   </NavLink>
                 </li>
                 <li className="sidebar-list-item">
-                  <NavLink className="sidebar-link" to="/rent">
-                    <img className="sidebar-icon" src={sidebarhome} alt="" />
-                    <div className="sidebar-link-text">
-                      Add Rent to Property
-                    </div>
-                  </NavLink>
-                </li>
-                <li className="sidebar-list-item">
                   <NavLink className="sidebar-link" to="/appointment-history">
                     <img
                       className="sidebar-icon"
