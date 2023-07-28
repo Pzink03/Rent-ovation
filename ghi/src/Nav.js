@@ -9,7 +9,6 @@ import "./css/landlordpage.css";
 import "./form.css";
 
 function Nav() {
-  // console.log(account);
   const { token } = useAuthContext();
   const { logout } = useToken();
 

@@ -46,10 +46,6 @@ function AppointmentForm() {
     }
   };
 
-  //   const filterAccounts = accounts.filter((account) => {
-  //     return account.is_landlord !== true;
-  //   });
-
   const handleChangeStatus = (event) => {
     const value = event.target.value;
     setStatus(value);
@@ -59,13 +55,6 @@ function AppointmentForm() {
     const value = event.target.value;
     setIssue(value);
   };
-
-  //   let messageClasses = "alert alert-success d-none mb-0";
-  //   let formClasses = "";
-  //   if (hasSignedUp) {
-  //     messageClasses = "alert alert-success mb-0";
-  //     formClasses = "d-none";
-  //   }
 
   return (
     <>
@@ -120,9 +109,6 @@ function AppointmentForm() {
             </div>
           </div>
         </form>
-        {/* <div className={messageClasses} id="success-message">
-            Congratulations on the sale!
-          </div> */}
       </div>
       <footer>
         <nav className="nav">

@@ -51,11 +51,6 @@ function TenantPropertyCard() {
             You don't have a property assigned to your account. <br></br>Speak
             with your landlord about adding one
           </h1>
-          {/* <div className="property-btn-container">
-            <NavLink className="contact-btn btn" to="/property">
-              Add Property
-            </NavLink>
-          </div> */}
         </div>
       ) : (
         properties.map((property) => (

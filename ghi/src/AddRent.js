@@ -153,9 +153,6 @@ function RentForm() {
             </div>
           </div>
         </form>
-        {/* <div className={messageClasses} id="success-message">
-            Congratulations on the sale!
-          </div> */}
       </div>
       <footer>
         <nav className="nav">
