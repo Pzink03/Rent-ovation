@@ -12,19 +12,28 @@ function PropertyForm() {
   const [zipcode, setZipcode] = useState("");
   const [pictureUrl, setPictureUrl] = useState("");
   const [description, setDescription] = useState("");
+  const [tenant_ids, setTenants] = useState([]);
   const { token } = useAuthContext();
 
   const fetchData = async () => {
-    const accountsUrl = "http://localhost:8000/accounts/all/";
+    const propertyURL = "http://localhost:8000/property/";
+    const propertyResponse = await fetch(propertyURL);
+    if (propertyResponse.ok) {
+      const propertyData = await propertyResponse.json();
+      const tenant_array = propertyData.map((property) => [property.tenant_id]);
+      console.log(tenant_array.flat());
+      setTenants(tenant_array.flat());
 
-    const accountsResponse = await fetch(accountsUrl);
-    if (accountsResponse.ok) {
-      const accountsData = await accountsResponse.json();
-      console.log(accountsData);
-      setAccounts(accountsData);
+      const accountsUrl = "http://localhost:8000/accounts/all/";
+
+      const accountsResponse = await fetch(accountsUrl);
+      if (accountsResponse.ok) {
+        const accountsData = await accountsResponse.json();
+        console.log(accountsData);
+        setAccounts(accountsData);
+      }
     }
   };
-
   useEffect(() => {
     fetchData();
   }, []);
@@ -64,10 +73,6 @@ function PropertyForm() {
     }
   };
 
-  //   const filterAccounts = accounts.filter((account) => {
-  //     return account.is_landlord !== true;
-  //   });
-
   const handleChangeTenant = (event) => {
     const value = event.target.value;
     setTenant(value);
@@ -105,13 +110,6 @@ function PropertyForm() {
     const value = event.target.value;
     setDescription(value);
   };
-
-  //   let messageClasses = "alert alert-success d-none mb-0";
-  //   let formClasses = "";
-  //   if (hasSignedUp) {
-  //     messageClasses = "alert alert-success mb-0";
-  //     formClasses = "d-none";
-  //   }
 
   return (
     <>
@@ -241,13 +239,16 @@ function PropertyForm() {
                 className="form-select"
               >
                 <option value="">Choose a Tenant</option>
-                {accounts.map((account) => {
-                  return (
-                    <option key={account.id} value={account.id}>
-                      {account.email}
-                    </option>
-                  );
-                })}
+                {accounts
+                  .filter((account) => account.is_landlord !== true)
+                  .filter((account) => !tenant_ids.includes(account.id))
+                  .map((account) => {
+                    return (
+                      <option key={account.id} value={account.id}>
+                        {account.email}
+                      </option>
+                    );
+                  })}
               </select>
             </div>
             <div className="btn-form-container">
@@ -255,9 +256,6 @@ function PropertyForm() {
             </div>
           </div>
         </form>
-        {/* <div className={messageClasses} id="success-message">
-            Congratulations on the sale!
-          </div> */}
       </div>
       <footer>
         <nav className="nav footer">

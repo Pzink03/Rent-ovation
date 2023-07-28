@@ -22,7 +22,7 @@ function TenantPropertyCard() {
   };
 
   const getProperties = async () => {
-    const propertiesUrl = "http://localhost:8000/property/user";
+    const propertiesUrl = "http://localhost:8000/property/tenant";
     const fetchOptions = {
       method: "get",
       credentials: "include",
@@ -34,33 +34,33 @@ function TenantPropertyCard() {
     const propertyResponse = await fetch(propertiesUrl, fetchOptions);
     if (propertyResponse.ok) {
       const properties = await propertyResponse.json();
-      console.log(properties);
-      setProperties(properties);
+      if (
+        typeof properties === "object" &&
+        properties.hasOwnProperty("message")
+      ) {
+        setProperties([]);
+      } else {
+        setProperties(properties);
+      }
     }
   };
 
   useEffect(() => {
     getToken();
-  }, []);
+  }, [token]);
 
   return (
     <div className="landlord-cards-container">
       {properties.length === 0 ? (
-        <div>
+        <div className="landlord-sub-title-container">
           <h1 className="sub-title">
             You don't have a property assigned to your account. <br></br>Speak
             with your landlord about adding one
           </h1>
-          {/* <div className="property-btn-container">
-            <NavLink className="contact-btn btn" to="/property">
-              Add Property
-            </NavLink>
-          </div> */}
         </div>
       ) : (
         properties.map((property) => (
           <div key={property.id} property={property} className="property-card">
-            {/* Property Card content */}
             <div className="property-name">{property.name}</div>
             <div className="property-header">
               <img

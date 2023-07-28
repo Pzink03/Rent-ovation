@@ -4,7 +4,7 @@ import { useAuthContext } from "@galvanize-inc/jwtdown-for-react";
 
 function PropertyCard() {
   const [properties, setProperties] = useState([]);
-  const [account, setAccount] = useState([]);
+
   const { token } = useAuthContext();
 
   const getToken = async () => {
@@ -17,16 +17,14 @@ function PropertyCard() {
     if (tokenResponse.ok) {
       const token = await tokenResponse.json();
       if (token !== null) {
-        setAccount(token.account);
         getProperties();
       } else {
-        setAccount([]);
       }
     }
   };
 
   const getProperties = async () => {
-    const propertiesUrl = "http://localhost:8000/property/user";
+    const propertiesUrl = "http://localhost:8000/property/landlord";
     const fetchOptions = {
       method: "get",
       credentials: "include",
@@ -38,8 +36,14 @@ function PropertyCard() {
     const propertyResponse = await fetch(propertiesUrl, fetchOptions);
     if (propertyResponse.ok) {
       const properties = await propertyResponse.json();
-      console.log(properties);
-      setProperties(properties);
+      if (
+        typeof properties === "object" &&
+        properties.hasOwnProperty("message")
+      ) {
+        setProperties([]);
+      } else {
+        setProperties(properties);
+      }
     }
   };
 
@@ -56,32 +60,13 @@ function PropertyCard() {
   };
 
   useEffect(() => {
-    // if (token && properties) {
-    //   const getProperties = async () => {
-    //     const propertiesUrl = "http://localhost:8000/property/user";
-    //     const fetchOptions = {
-    //       method: "get",
-    //       credentials: "include",
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //         Authorization: `Bearer ${token}`,
-    //       },
-    //     };
-    //     const propertyResponse = await fetch(propertiesUrl, fetchOptions);
-    //     if (propertyResponse.ok) {
-    //       const properties = await propertyResponse.json();
-    //       console.log(properties);
-    //       setProperties(properties);
-    //     }
-    //   };
     getToken();
-    // getProperties();
   }, [token]);
 
   return (
     <div className="landlord-cards-container">
       {properties.length === 0 ? (
-        <div>
+        <div className="landlord-sub-title-container">
           <h1 className="sub-title">
             You don't have any properties. Would you like to add some?
           </h1>
@@ -94,7 +79,6 @@ function PropertyCard() {
       ) : (
         properties.map((property) => (
           <div key={property.id} property={property} className="property-card">
-            {/* Property Card content */}
             <div className="property-name">{property.name}</div>
             <div className="property-header">
               <img
@@ -116,9 +100,6 @@ function PropertyCard() {
             <div className="property-feature">{property.zipcode}</div>
 
             <div className="btn-container">
-              <NavLink className="btn btn-animation" to="/landlord">
-                Update
-              </NavLink>
               <NavLink
                 className="btn btn-animation btn-danger"
                 onClick={() => DeleteProperty(property.id)}

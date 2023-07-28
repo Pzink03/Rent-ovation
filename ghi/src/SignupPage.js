@@ -27,32 +27,6 @@ function SignupForm() {
     }
   };
 
-  //   const handleSubmit = async (event) => {
-  //     event.preventDefault();
-  //     const data = {};
-  //     data.email = email;
-  //     data.password = password;
-  //     data.is_landlord = is_landlord;
-
-  //     const accountsUrl = "http://localhost:8000/api/accounts";
-  //     const fetchOptions = {
-  //       method: "post",
-  //       body: JSON.stringify(data),
-  //       credentials: "include",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //     };
-  //     const accountsResponse = await fetch(accountsUrl, fetchOptions);
-  //     if (accountsResponse.ok) {
-  //       setEmail("");
-  //       setPassword("");
-  //       getToken();
-  //         setIsLandlord(false);
-  //         navigate("/login");
-  //     }
-  //   };
-
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -73,16 +47,6 @@ function SignupForm() {
       console.error("Invalid Value");
     }
   };
-  //   useEffect(() => {
-  //     if (account) {
-  //       if (account.is_landlord) {
-  //         navigate("/landlord");
-  //       } else {
-  //         navigate("/tenant");
-  //       }
-  //     }
-  //     console.log(account);
-  //   }, [account]);
 
   const handleEmailChange = (event) => {
     const value = event.target.value;
