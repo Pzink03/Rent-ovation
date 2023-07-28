@@ -123,7 +123,7 @@ function PropertyForm() {
           className="form-box"
           id="create-sales-form"
         >
-          <h1 className="form-title gradient-text">ADD PROPERTY</h1>
+          <h1 className="form-title">ADD PROPERTY</h1>
 
           <label className="label" htmlFor="name">
             Name:
@@ -260,7 +260,7 @@ function PropertyForm() {
           </div> */}
       </div>
       <footer>
-        <nav className="nav footer">
+        <nav className="nav">
           <img className="logo" src={logo} alt="Web Dev Simplified Logo" />
         </nav>
       </footer>

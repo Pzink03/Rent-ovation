@@ -6,12 +6,11 @@
   position: relative;
   overflow: hidden;
   z-index: 1;
-  height: 93vh;
-  opacity: 0.9;
+  height: 100vh;
 }
 
-.full-screen-header.form {
-  height: 93vh;
+.full-screen-header {
+  height: 100vh;
 
   display: flex;
   flex-direction: column;
@@ -35,7 +34,6 @@
   background-size: cover;
   background-position: 40% center;
   filter: blur(0px);
-  height: 100%;
   z-index: -1; /* Place the pseudo-element below the header content */
 }
 
@@ -49,20 +47,15 @@
   margin: 0;
   margin-bottom: 2rem;
   padding: 1rem 5rem;
-  font-family: roboto;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 }
 
 .input {
   border: 1px solid #aaa;
   outline: none;
-  padding: 1em 1em;
-  margin: 0 3rem 0.5rem 3rem;
+  padding: 0.5em 1em;
   border-radius: 0.2em;
   background-color: white;
   text-align: inline;
-  display: inline;
-  width: 100%;
 }
 
 .input:focus {
@@ -73,7 +66,7 @@
 .form-floating {
   display: flex;
   justify-content: center;
-  align-items: stretch;
+  align-items: center;
   margin: 0.5rem;
 }
 
@@ -85,7 +78,9 @@
 }
 
 .label {
-  padding-left: 5px;
+  display: flex;
+  text-align: center;
+  justify-content: center;
   font-weight: bold;
 }
 
@@ -94,7 +89,6 @@
   align-items: center;
   justify-content: center;
   margin-bottom: 1rem;
-  opacity: 1;
 }
 
 .form-box:hover {
@@ -107,14 +101,4 @@
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-.form-select:hover,
-.form-select:active {
-  border-color: #0af;
-  box-shadow: 0 0 5px #0af;
-}
-
-.btn.btn-form {
-  opacity: 1;
 }

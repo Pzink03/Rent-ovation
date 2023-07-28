@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import logo from "./img/logo.png";
 import sidebarhome from "./img/sidebarhome.png";
 import appointmentlogo from "./img/appointmentlogo.png";
 import { NavLink } from "react-router-dom";
 import PropertyCard from "./Propertycard";
-import AppointmentHistoryPage from './AppointmentHistoryPage';
+import AppointmentCard from "./AppointmentCard";
+import LogoutSidebarIcon from "./img/LogoutSidebarIcon.png";
+
 function LandlordPage(props) {
   return (
     <>
@@ -30,7 +32,11 @@ function LandlordPage(props) {
                 {/* link for the appointment history */}
                 <li className="sidebar-list-item">
                   <NavLink className="sidebar-link" to="/appointment-history">
-                    <img className="sidebar-icon" src={appointmentlogo} alt="" />
+                    <img
+                      className="sidebar-icon"
+                      src={appointmentlogo}
+                      alt=""
+                    />
                     <div className="sidebar-link-text">Appointment History</div>
                   </NavLink>
                 </li>
@@ -39,11 +45,7 @@ function LandlordPage(props) {
             <div className="bottom-sidebar">
               <ul className="sidebar-list">
                 <li className="sidebar-list-item">
-                  <NavLink
-                    className="sidebar-link"
-                    to="/"
-                    onClick={() => logout()}
-                  >
+                  <NavLink className="sidebar-link" href="#">
                     <img
                       className="sidebar-icon"
                       src={LogoutSidebarIcon}
@@ -55,8 +57,10 @@ function LandlordPage(props) {
               </ul>
             </div>
           </aside>
-          {window.location.pathname === '/property' && <PropertyCard />}
-          {window.location.pathname === '/appointment-history' && <AppointmentHistoryPage />}
+          {window.location.pathname === "/property" && <PropertyCard />}
+          {window.location.pathname === "/appointment-history" && (
+            <AppointmentHistoryPage />
+          )}
         </header>
         <h2 className="section-title">Appointments</h2>
         <AppointmentCard />

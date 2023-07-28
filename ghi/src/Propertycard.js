@@ -4,26 +4,7 @@ import { useAuthContext } from "@galvanize-inc/jwtdown-for-react";
 
 function PropertyCard() {
   const [properties, setProperties] = useState([]);
-  const [account, setAccount] = useState([]);
   const { token } = useAuthContext();
-
-  const getToken = async () => {
-    const tokenUrl = "http://localhost:8000/token";
-    const fetchOptions = {
-      method: "get",
-      credentials: "include",
-    };
-    const tokenResponse = await fetch(tokenUrl, fetchOptions);
-    if (tokenResponse.ok) {
-      const token = await tokenResponse.json();
-      if (token !== null) {
-        setAccount(token.account);
-        getProperties();
-      } else {
-        setAccount([]);
-      }
-    }
-  };
 
   const getProperties = async () => {
     const propertiesUrl = "http://localhost:8000/property/user";
@@ -56,27 +37,8 @@ function PropertyCard() {
   };
 
   useEffect(() => {
-    // if (token && properties) {
-    //   const getProperties = async () => {
-    //     const propertiesUrl = "http://localhost:8000/property/user";
-    //     const fetchOptions = {
-    //       method: "get",
-    //       credentials: "include",
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //         Authorization: `Bearer ${token}`,
-    //       },
-    //     };
-    //     const propertyResponse = await fetch(propertiesUrl, fetchOptions);
-    //     if (propertyResponse.ok) {
-    //       const properties = await propertyResponse.json();
-    //       console.log(properties);
-    //       setProperties(properties);
-    //     }
-    //   };
-    getToken();
-    // getProperties();
-  }, [token]);
+    getProperties();
+  }, []);
 
   return (
     <div className="landlord-cards-container">
@@ -103,18 +65,12 @@ function PropertyCard() {
                 alt=""
               />
             </div>
-            <label className="property-label">Name:</label>
             <div className="property-feature">{property.name}</div>
-            <label className="property-label">Address:</label>
-
             <div className="property-feature">{property.address}</div>
-            <label className="property-label">City:</label>
             <div className="property-feature">{property.city}</div>
-            <label className="property-label">State:</label>
             <div className="property-feature">{property.state}</div>
-            <label className="property-label">Zip:</label>
             <div className="property-feature">{property.zipcode}</div>
-
+            <div className="property-feature">{property.address}</div>
             <div className="btn-container">
               <NavLink className="btn btn-animation" to="/landlord">
                 Update

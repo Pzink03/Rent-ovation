@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
 import logo from "./img/logo.png";
-import { useAuthContext } from "@galvanize-inc/jwtdown-for-react";
 
 function AppointmentForm() {
   const [statuses, setStatuses] = useState([]);
   const [status, setStatus] = useState("");
   const [issue, setIssue] = useState("");
-  const { token } = useAuthContext();
 
   const fetchStatus = async () => {
     const statusUrl = "http://localhost:8000/status/";
@@ -36,7 +34,6 @@ function AppointmentForm() {
       body: JSON.stringify(data),
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
       },
     };
     const createAppointmentResponse = await fetch(appointmentUrl, fetchOptions);

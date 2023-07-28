@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Nav from "./Nav.js";
 import MainPage from "./MainPage.js";
 import LandlordPage from "./LandlordPage.js";
-import AppointmentHistoryPage from './AppointmentHistoryPage';
+import AppointmentHistoryPage from "./AppointmentHistoryPage";
 // import ErrorNotification from "./ErrorNotification";
 import "./css/App.css";
 
@@ -42,22 +42,18 @@ function App() {
       <AuthProvider baseUrl="http://localhost:8000">
         <Nav />
 
-        <Routes>
-          <Route path="/" element={<MainPage />} />
-          <Route path="/landlord" element={<LandlordPage />} />
-<<<<<<< HEAD
-          <Route path="/appointment-history" element={<AppointmentHistoryPage />} />
-          <Route path="/tenant-signup" element={<TenantSignupForm />} />
-          <Route path="/landlord-signup" element={<LandlordSignupForm />} />
-=======
-          <Route path="/property" element={<PropertyForm />} />
->>>>>>> cb3b701695b6e61886457c7bdd3760c6fa2497f1
-          <Route path="/tenant" element={<TenantPage />} />
-          <Route path="/about" element={<AboutPage />} />
-          <Route path="/add-appointment" element={<AppointmentForm />} />
-          <Route path="/signup" element={<SignupForm />} />
-          <Route path="/login" element={<LoginForm />} />
-        </Routes>
+        <div>
+          <Routes>
+            <Route path="/" element={<MainPage />} />
+            <Route path="/landlord" element={<LandlordPage />} />
+            <Route path="/property" element={<PropertyForm />} />
+            <Route path="/tenant" element={<TenantPage />} />
+            <Route path="/about" element={<AboutPage />} />
+            <Route path="/add-appointment" element={<AppointmentForm />} />
+            <Route path="/signup" element={<SignupForm />} />
+            <Route path="/login" element={<LoginForm />} />
+          </Routes>
+        </div>
       </AuthProvider>
     </BrowserRouter>
   );

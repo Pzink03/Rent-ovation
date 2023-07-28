@@ -1,44 +1,36 @@
 import useToken from "@galvanize-inc/jwtdown-for-react";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { useAuthContext } from "@galvanize-inc/jwtdown-for-react";
+import { useState } from "react";
 
-function LoginForm() {
+const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [is_landlord, setIsLandlord] = useState(false);
   const { login } = useToken();
-  const { token } = useAuthContext();
   const navigate = useNavigate();
-  console.log(token);
-  const getToken = async () => {
-    const tokenUrl = "http://localhost:8000/token";
-    const fetchOptions = {
-      method: "get",
-      credentials: "include",
-    };
-    const tokenResponse = await fetch(tokenUrl, fetchOptions);
-    if (tokenResponse.ok) {
-      const token = await tokenResponse.json();
-      if (token !== null) {
-        console.log(token.account);
-        if (token.account.is_landlord !== true) {
-          navigate("/tenant");
-        } else {
-          navigate("/landlord");
-        }
-      }
-    }
-  };
-
-  useEffect(() => {
-    getToken();
-  }, [token]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const username = email;
-    login(username, password);
-    e.target.reset();
+    login(username, password)
+      .then(() => {
+        console.log(
+          `email: ${email} password: ${password} is_landlord: ${is_landlord}`
+        );
+
+        if (is_landlord !== true) {
+          navigate("/tenant");
+        } else {
+          navigate("/landlord");
+        }
+      })
+      .catch((error) => {
+        console.error("Login failed:", error);
+      });
+  };
+
+  const handleCheck = (e) => {
+    setIsLandlord(e.target.checked);
   };
 
   return (
@@ -81,6 +73,20 @@ function LoginForm() {
               className="input"
             />
           </div>
+          <label className="label" htmlFor="name">
+            Landlord?
+          </label>
+          <div className="form-floating">
+            <input
+              onChange={handleCheck}
+              placeholder="Email"
+              required
+              type="checkbox"
+              checked={is_landlord}
+              value="landlord"
+              className="input"
+            />
+          </div>
           <div className="mb-3">
             <div className="btn-form-container">
               <button className="btn btn-form">Create</button>
@@ -90,6 +96,6 @@ function LoginForm() {
       </div>
     </>
   );
-}
+};
 
 export default LoginForm;
