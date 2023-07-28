@@ -12,8 +12,8 @@ function PropertyForm() {
   const [zipcode, setZipcode] = useState("");
   const [pictureUrl, setPictureUrl] = useState("");
   const [description, setDescription] = useState("");
-  const { token } = useAuthContext();
   const [tenant_ids, setTenants] = useState([]);
+  const { token } = useAuthContext();
 
   const fetchData = async () => {
     const propertyURL = "http://localhost:8000/property/";

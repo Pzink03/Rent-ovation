@@ -42,7 +42,6 @@ function PropertyCard() {
       ) {
         setProperties([]);
       } else {
-        console.log(properties);
         setProperties(properties);
       }
     }

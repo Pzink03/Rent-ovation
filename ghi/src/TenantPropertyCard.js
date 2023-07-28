@@ -40,7 +40,6 @@ function TenantPropertyCard() {
       ) {
         setProperties([]);
       } else {
-        console.log(properties);
         setProperties(properties);
       }
     }
@@ -77,7 +76,7 @@ function TenantPropertyCard() {
             <div className="property-feature">{property.zipcode}</div>
             <div className="property-feature">{property.address}</div>
             <div className="btn-container">
-              <NavLink className="btn btn-animation tenant-btn" to="/tenant">
+              <NavLink className="btn btn-animation tenant-btn" to="/billings">
                 Pay Rent
               </NavLink>
               <NavLink

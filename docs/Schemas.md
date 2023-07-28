@@ -11,7 +11,6 @@ Billings Table
 
 | Field | Type |
 |---------|---------|
-
 | id | SERIAL PRIMARY KEY NOT NULL |
 | tenant_id | INT UNIQUE REFERENCES accounts(id) |
 | name | VARCHAR(1000) NOT NULL |
@@ -23,7 +22,6 @@ Property Table
 
 | Field | Type |
 |---------|---------|
-
 | id | SERIAL PRIMARY KEY NOT NULL |
 | landlord_id | INT REFERENCES accounts(id) ON DELETE CASCADE NOT NULL |
 | tenant_id | INT UNIQUE REFERENCES accounts(id) |
@@ -39,7 +37,6 @@ Status Table
 
 | Field | Type |
 |---------|---------|
-
 | id  | SERIAL PRIMARY KEY NOT NULL |
 | status_label | VARCHAR(100) NOT NULL UNIQUE |
 
@@ -47,7 +44,6 @@ Rent Table
 
 | Field | Type |
 |---------|---------|
-
 |id | SERIAL PRIMARY KEY NOT NULL |
 | amount_due | INT NOT NULL |
 | due_date | DATE NOT NULL |
@@ -58,7 +54,6 @@ Appointment Table
 
 | Field | Type |
 |---------|---------|
-
 | id | SERIAL PRIMARY KEY NOT NULL |
 | issue | TEXT NOT NULL |
 | created_on | DATE NOT NULL |
