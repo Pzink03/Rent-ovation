@@ -52,6 +52,13 @@ function BillingsPage() {
 
   return (
     <>
+            {/* Add the Font Awesome CSS link here */}
+      <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+      />
+            {/* The rest of your component */}
+      <body class="specific">
             <div className="blur-background"></div>
             <div class="container">
                 <div className='row'>
@@ -74,6 +81,14 @@ function BillingsPage() {
                         </div>
                         <div className="form-group">
                             <label for="card_number">Card Number</label>
+                            {/* Add the card-logo-input div here */}
+                            <div className="card-logo-input">
+                                <i className="fab fa-cc-visa" style={{ color: "navy" }}></i>
+                                <i className="fab fa-cc-mastercard" style={{ color: "blue" }}></i>
+                                <i className="fab fa-cc-amex" style={{ color: "red" }}></i>
+                                <i className="fab fa-cc-discover" style={{ color: "orange" }}></i>
+                            </div>
+                            {/* End of card-logo-input div */}
                             <input
                                 onChange={(e) => setCard_number(e.target.value)}
                                 placeholder="1111222233334444"
@@ -120,7 +135,8 @@ function BillingsPage() {
             </div>
         </div>
         </div>
-
+        {/* ... Your other HTML content ... */}
+    </body>
     </>
     );
 }; 
