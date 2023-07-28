@@ -6,7 +6,6 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background-image: linear-gradient(to right, #ff6b6b, #556270);
 }
 
 .container {
@@ -56,16 +55,30 @@ input:focus {
 }
 
 .card-logo-input {
-    display: flex;
-    align-items: center;
-    margin-bottom: 15px;
+  display: flex;
 }
 
 .card-logo-input i {
-    font-size: 28px;
-    margin-right: 10px;
-    color: #777;
+  font-size: 30px;
+  margin-right: 10px;
 }
+
+.card-logo-input .fab.fa-cc-visa {
+  color: navy;
+}
+
+.card-logo-input .fab.fa-cc-mastercard {
+  color: blue;
+}
+
+.card-logo-input .fab.fa-cc-amex {
+  color: red;
+}
+
+.card-logo-input .fab.fa-cc-discover {
+  color: orange;
+}
+
 
 button {
     background-color: #47b8e0;
