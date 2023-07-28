@@ -11,7 +11,6 @@ function TenantPage() {
       <div className="blur-background"></div>
       <div className="main-title gradient-text">Welcome!</div>
       <TenantPropertyCard />
-      {/* <img className="tenant-property-picture" src={header_image} alt="" /> */}
     </header>
   );
 }

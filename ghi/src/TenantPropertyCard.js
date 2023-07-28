@@ -17,9 +17,6 @@ function TenantPropertyCard() {
       const token = await tokenResponse.json();
       if (token !== null) {
         getProperties();
-        setAccount(token.account);
-      } else {
-        setAccount([]);
       }
     }
   };

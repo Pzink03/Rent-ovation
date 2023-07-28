@@ -2,13 +2,12 @@ import { NavLink } from "react-router-dom";
 import { ReactComponent as Logo } from "./img/arrow_down.svg";
 import header_image from "./img/header_image.jpg";
 import header_image2 from "./img/header_image2.jpg";
-import slime from "./img/Slime.jpg";
 import profile1 from "./img/profile1.jpg";
 import testimonial_picture1 from "./img/MTestimonial.jpg";
 import testimonial_picture2 from "./img/MTestimonial2.jpg";
 import testimonial_picture3 from "./img/MTestimonial3.jpg";
 import testimonial_picture4 from "./img/MTestimonial4.jpg";
-// import testimonial_picture5 from "./img/FMTestimonial.jpg";
+import testimonial_picture5 from "./img/FMTestimonial.jpg";
 import LoginAboutImage from "./img/LoginCardAboutImage.jpg";
 
 function AboutPage() {
@@ -100,7 +99,7 @@ function AboutPage() {
         <div className="testimonial-grid">
           <div className="testimonial-grid-item">
             <div className="testimonial-picture">
-              <img src={slime} alt="HTML 5 Icon" />
+              <img src={testimonial_picture5} alt="HTML 5 Icon" />
             </div>
 
             <div className="testimonial-text-container">
@@ -164,75 +163,12 @@ function AboutPage() {
       </section>
       <section className="section section-accent">
         <h2 className="section-title">Want to know more?</h2>
-        {/* <p className="free-sub-title">Want to learn more about our team?</p> */}
         <div className="btn-container contact">
           <NavLink className="contact-btn btn" to="/landlord">
             Contact Us!
           </NavLink>
         </div>
       </section>
-
-      {/* <main>
-        <section className="section">
-          <h2 className="section-title about">What we offer</h2>
-          <div className="main-cards-container">
-            <div className="main-card">
-              <div className="card-header">
-                <div className="card-name">Sign Up As Renter!</div>
-                <img className="property-picture" src={header_image} alt="" />
-              </div>
-              <ul className="card-feature">
-                <li className="feature">Add & Manage Properties</li>
-                <li className="feature">Pay Rent</li>
-
-                <li className="feature">
-                  Make Appointments With Your Landlord
-                </li>
-
-                <div className="btn-container">
-                  <NavLink className="btn btn-animation" to="/tenant">
-                    Sign Up
-                  </NavLink>
-                </div>
-              </ul>
-            </div>
-            <div className="main-card accent">
-              <div className="card-header">
-                <div className="card-name">Sign Up As Property Manager!</div>
-                <img className="property-picture" src={header_image} alt="" />
-              </div>
-              <ul className="card-feature">
-                <li className="feature">Add & Manage Properties</li>
-                <li className="feature">Allow Tenants To Make Rent Payments</li>
-                <li className="feature">Manage Appointments With Tenants</li>
-
-                <div className="btn-container">
-                  <NavLink className="btn btn-animation" to="/landlord">
-                    Sign Up
-                  </NavLink>
-                </div>
-              </ul>
-            </div>
-            <div className="main-card">
-              <div className="card-header">
-                <div className="card-name">Already Signed Up?</div>
-                <img className="property-picture" src={header_image} alt="" />
-              </div>
-              <ul className="card-feature">
-                <li className="feature last-card">
-                  Already A Member? Login Below!
-                </li>
-
-                <div className="btn-container">
-                  <NavLink className="btn btn-animation" to="/landlord">
-                    Login
-                  </NavLink>
-                </div>
-              </ul>
-            </div>
-          </div>
-        </section>
-      </main> */}
     </>
   );
 }

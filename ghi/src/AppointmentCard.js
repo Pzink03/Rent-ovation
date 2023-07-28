@@ -1,19 +1,49 @@
 import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
-import profile1 from "./img/profile1.jpg";
+
 import header_image from "./img/header_image.jpg";
+import { useAuthContext } from "@galvanize-inc/jwtdown-for-react";
 
 function AppointmentCard() {
   const [appointments, setAppointments] = useState([]);
+  const { token } = useAuthContext();
+  const [account, setAccount] = useState([]);
+
+  const getToken = async () => {
+    const tokenUrl = "http://localhost:8000/token";
+    const fetchOptions = {
+      method: "get",
+      credentials: "include",
+    };
+    const tokenResponse = await fetch(tokenUrl, fetchOptions);
+    if (tokenResponse.ok) {
+      const token = await tokenResponse.json();
+      if (token !== null) {
+        setAccount(token.account);
+        getAppointments();
+      } else {
+        setAccount([]);
+      }
+    }
+  };
 
   const getAppointments = async () => {
-    const appointmentsResponse = await fetch(
-      "http://localhost:8000/appointment/"
-    );
-    if (appointmentsResponse.ok) {
-      const appointments = await appointmentsResponse.json();
+    const appointmentsUrl = "http://localhost:8000/appointment/landlord";
+    const fetchOptions = {
+      method: "get",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const appointmentResponse = await fetch(appointmentsUrl, fetchOptions);
+    if (appointmentResponse.ok) {
+      const appointments = await appointmentResponse.json();
       console.log(appointments);
       setAppointments(appointments);
+    } else {
+      console.error({ error: "couldnt get appointments" });
     }
   };
 
@@ -30,46 +60,52 @@ function AppointmentCard() {
   };
 
   useEffect(() => {
-    getAppointments();
-  }, []);
+    getToken();
+  }, [token]);
 
   return (
     <div className="testimonial-grid">
-      {appointments.length === 0 ? (
+      {appointments?.length === 0 ? (
         <h1 className="sub-title testimonial">
           You don't have any appointments.
         </h1>
       ) : (
         appointments.map((appointment) => (
           <div
-            key={appointment.id}
+            key={appointment.appointment_id}
             appointment={appointment}
             className="testimonial-grid-item appointments"
           >
+            <h3 className="appointment-issue">{appointment.property_name}</h3>
             <div className="testimonial-picture appointments">
               <img src={header_image} alt="HTML 5 Icon" />
             </div>
 
             <div className="testimonial-text-container appointments">
-              <h3>Property:</h3>
-              <div className="appointment-issue">{appointment.property_id}</div>
-              <h3>Status:</h3>
-              <h3 className="appointment-issue">{appointment.status_id}</h3>
-              <h3>Issue:</h3>
-              <div className="appointment-issue2">{appointment.issue}</div>
-              <h3>Created On:</h3>
-              <div className="appointment-issue">{appointment.created_on}</div>
+              <h3 className="appointment-issue-title">Tenant:</h3>
+              <div className="appointment-issue">
+                {appointment.tenant_email}
+              </div>
+              <h3 className="appointment-issue-title">Appointment Status:</h3>
+              <div className="appointment-issue">
+                {appointment.status_label}
+              </div>
+              <h3 className="appointment-issue-title">Tenant Issue:</h3>
+              <div className="appointment-issue">{appointment.issue}</div>
             </div>
             <div className="btn-container appointments">
               <NavLink className="btn btn-animation" to="/landlord">
-                Update
+                Complete
               </NavLink>
               <NavLink
                 className="btn btn-animation btn-danger"
                 onClick={() => DeleteAppointment(appointment.id)}
               >
-                Delete
+                Cancel
               </NavLink>
+            </div>
+            <div className="appointment-issue created-on">
+              Created on: {appointment.created_on}
             </div>
           </div>
         ))

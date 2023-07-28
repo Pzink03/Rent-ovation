@@ -64,10 +64,6 @@ function PropertyForm() {
     }
   };
 
-  //   const filterAccounts = accounts.filter((account) => {
-  //     return account.is_landlord !== true;
-  //   });
-
   const handleChangeTenant = (event) => {
     const value = event.target.value;
     setTenant(value);
@@ -105,13 +101,6 @@ function PropertyForm() {
     const value = event.target.value;
     setDescription(value);
   };
-
-  //   let messageClasses = "alert alert-success d-none mb-0";
-  //   let formClasses = "";
-  //   if (hasSignedUp) {
-  //     messageClasses = "alert alert-success mb-0";
-  //     formClasses = "d-none";
-  //   }
 
   return (
     <>
@@ -255,9 +244,6 @@ function PropertyForm() {
             </div>
           </div>
         </form>
-        {/* <div className={messageClasses} id="success-message">
-            Congratulations on the sale!
-          </div> */}
       </div>
       <footer>
         <nav className="nav footer">
