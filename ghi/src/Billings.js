@@ -1,5 +1,5 @@
 import "./css/billings.css";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useAuthContext } from "@galvanize-inc/jwtdown-for-react";
 
 
@@ -35,7 +35,7 @@ function BillingsPage() {
             data.cvv = cvv;
             console.log(data);
             const url = 'http://localhost:8000/create/billings/';
-            const fetchConfig = {
+            const fetchOptions = {
                 method: "post",
                 body: JSON.stringify(data),
                 headers: {
@@ -43,7 +43,7 @@ function BillingsPage() {
                 Authorization: `Bearer ${token}`,
             },
         };
-        const createBillingsResponse = await fetch(url, fetchConfig);
+        const createBillingsResponse = await fetch(url, fetchOptions);
         if (createBillingsResponse.ok) {
             setName('');
             setCard_number('');
@@ -55,6 +55,12 @@ function BillingsPage() {
 
   return (
     <>
+    {/* Add the Font Awesome CSS link here */}
+      <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+      />
+        <body class="specific">
             <div className="blur-background"></div>
             <div class="container">
                 <div className='row'>
@@ -77,6 +83,14 @@ function BillingsPage() {
                         </div>
                         <div className="form-group">
                             <label for="card_number">Card Number</label>
+                            {/* Add the card-logo-input div here */}
+                            <div className="card-logo-input">
+                                <i className="fab fa-cc-visa" style={{ color: "navy" }}></i>
+                                <i className="fab fa-cc-mastercard" style={{ color: "blue" }}></i>
+                                <i className="fab fa-cc-amex" style={{ color: "red" }}></i>
+                                <i className="fab fa-cc-discover" style={{ color: "orange" }}></i>
+                            </div>
+                            {/* End of card-logo-input div */}
                             <input
                                 onChange={(e) => setCard_number(e.target.value)}
                                 placeholder="1111222233334444"
@@ -87,6 +101,7 @@ function BillingsPage() {
                                 className="form-control"
                                 value={card_number}
                             />
+
                         </div>
                         <div className="form-row">
                             <div class="form-group">
@@ -123,7 +138,8 @@ function BillingsPage() {
             </div>
         </div>
         </div>
-
+         {/* ... Your other HTML content ... */}
+        </body>
     </>
     );
 }; 

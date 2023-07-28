@@ -6,14 +6,18 @@ import LandlordPage from "./LandlordPage.js";
 import AppointmentHistoryPage from './AppointmentHistoryPage';
 // import ErrorNotification from "./ErrorNotification";
 import "./css/App.css";
-
-import TenantPage from "./TenantPage.js";
+import { AuthProvider } from "@galvanize-inc/jwtdown-for-react";
+import useToken from "@galvanize-inc/jwtdown-for-react";
 import AboutPage from "./AboutPage.js";
+import LoginForm from "./LoginForm.js";
+import PropertyForm from "./AddProperty.js";
+import AppointmentForm from "./AddAppointment.js";
+import TenantPage from "./TenantPage.js";
 import Login from "./LoginForm.js";
 import BillingsPage from "./Billings.js";
+import SignupForm from "./SignupPage.js";
 
-import TenantSignupForm from "./TenantSignupForm.js";
-import LandlordSignupForm from "./LandlordSignupForm.js";
+
 
 function App() {
   // const { token } = useToken();
@@ -47,13 +51,10 @@ function App() {
         <Nav />
 
         <Routes>
-          <Route path="/billings" element={<BillingsPage />} />
           <Route path="/" element={<MainPage />} />
           <Route path="/billings" element={<BillingsPage />} />
           <Route path="/landlord" element={<LandlordPage />} />
           <Route path="/appointment-history" element={<AppointmentHistoryPage />} />
-          <Route path="/tenant-signup" element={<TenantSignupForm />} />
-          <Route path="/landlord-signup" element={<LandlordSignupForm />} />
           <Route path="/tenant" element={<TenantPage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/add-appointment" element={<AppointmentForm />} />
