@@ -12,27 +12,32 @@ import "./css/App.css";
 import TenantPage from "./TenantPage.js";
 import AboutPage from "./AboutPage.js";
 import LoginForm from "./LoginForm.js";
-import LoginForm from "./LoginForm.js";
 import AppointmentHistoryPage from "./AppointmentHistoryPage.js";
 import BillingsPage from "./Billings.js";
 
 function App() {
   return (
     <BrowserRouter>
+      <AuthProvider baseUrl="http://localhost:8000">
         <Nav />
+
         <Routes>
           <Route path="/" element={<MainPage />} />
           <Route path="/billings" element={<BillingsPage />} />
           <Route path="/landlord" element={<LandlordPage />} />
-          <Route path="/appointment-history" element={<AppointmentHistoryPage />} />
+          <Route path="/property" element={<PropertyForm />} />
           <Route path="/tenant" element={<TenantPage />} />
           <Route path="/about" element={<AboutPage />} />
+          <Route path="/add-appointment" element={<AppointmentForm />} />
+          <Route path="/signup" element={<SignupForm />} />
+          <Route path="/rent" element={<RentForm />} />
           <Route path="/login" element={<LoginForm />} />
           <Route
             path="/appointment-history"
             element={<AppointmentHistoryPage />}
           />
         </Routes>
+      </AuthProvider>
     </BrowserRouter>
   );
 }

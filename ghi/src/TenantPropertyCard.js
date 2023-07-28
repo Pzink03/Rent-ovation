@@ -50,7 +50,7 @@ function TenantPropertyCard() {
   }, [token]);
 
   return (
-    <div className="landlord-cards-container">
+    <div className="landlord-cards-container-10">
       {properties.length === 0 ? (
         <div className="landlord-sub-title-container">
           <h1 className="sub-title">
@@ -69,12 +69,16 @@ function TenantPropertyCard() {
                 alt=""
               />
             </div>
+            <label className="property-label">Name:</label>
             <div className="property-feature">{property.name}</div>
+            <label className="property-label">Address:</label>
             <div className="property-feature">{property.address}</div>
+            <label className="property-label">City:</label>
             <div className="property-feature">{property.city}</div>
+            <label className="property-label">State:</label>
             <div className="property-feature">{property.state}</div>
+            <label className="property-label">Zip:</label>
             <div className="property-feature">{property.zipcode}</div>
-            <div className="property-feature">{property.address}</div>
             <div className="btn-container">
               <NavLink className="btn btn-animation tenant-btn" to="/billings">
                 Pay Rent

@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from apscheduler.schedulers.background import BackgroundScheduler
 from authenticator import authenticator
 from fastapi.middleware.cors import CORSMiddleware
-from routers import accounts, property, status, rent, appointments, billings
+from routers import accounts, property, status, rent, appointments, billings, appointment_history
 from authenticator import authenticator
 import os
 
@@ -58,4 +58,4 @@ app.include_router(property.router)
 app.include_router(status.router)
 app.include_router(rent.router)
 app.include_router(appointments.router)
-app.include_router(appointment_history_router)
+app.include_router(appointment_history.router)
