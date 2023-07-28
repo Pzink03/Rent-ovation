@@ -39,22 +39,15 @@ function App() {
 
   return (
     <BrowserRouter>
-      <AuthProvider baseUrl="http://localhost:8000">
         <Nav />
-
         <Routes>
           <Route path="/" element={<MainPage />} />
           <Route path="/landlord" element={<LandlordPage />} />
           <Route path="/appointment-history" element={<AppointmentHistoryPage />} />
-          <Route path="/tenant-signup" element={<TenantSignupForm />} />
-          <Route path="/landlord-signup" element={<LandlordSignupForm />} />
           <Route path="/tenant" element={<TenantPage />} />
           <Route path="/about" element={<AboutPage />} />
-          <Route path="/add-appointment" element={<AppointmentForm />} />
-          <Route path="/signup" element={<SignupForm />} />
           <Route path="/login" element={<LoginForm />} />
         </Routes>
-      </AuthProvider>
     </BrowserRouter>
   );
 }
