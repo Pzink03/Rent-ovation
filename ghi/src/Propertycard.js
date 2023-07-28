@@ -26,7 +26,7 @@ function PropertyCard() {
   };
 
   const getProperties = async () => {
-    const propertiesUrl = "http://localhost:8000/property/user";
+    const propertiesUrl = "http://localhost:8000/property/landlord";
     const fetchOptions = {
       method: "get",
       credentials: "include",
