@@ -41,8 +41,8 @@ function BillingsPage() {
                 Authorization: `Bearer ${token}`,
             },
         };
-        const createBillingsResponse = await fetch(url, fetchOptions);
-        if (createBillingsResponse.ok) {
+        const response = await fetch(url, fetchOptions);
+        if (response.ok) {
             setName('');
             setCard_number('');
             setExpirydate('');
@@ -50,14 +50,6 @@ function BillingsPage() {
 
         }
     };
-    const createBillingsResponse = await fetch(url, fetchOptions);
-    if (createBillingsResponse.ok) {
-      setName("");
-      setCard_number("");
-      setExpirydate("");
-      setCvv("");
-    }
-  };
 
   return (
     <>
