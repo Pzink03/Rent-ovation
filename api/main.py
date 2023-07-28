@@ -2,10 +2,17 @@ from fastapi import FastAPI, BackgroundTasks
 from apscheduler.schedulers.background import BackgroundScheduler
 from authenticator import authenticator
 from fastapi.middleware.cors import CORSMiddleware
-from routers import accounts, property, status, rent, appointments, billings
+from routers import (
+    accounts,
+    property,
+    status,
+    rent,
+    appointments,
+    billings,
+    appointment_history,
+)
 from authenticator import authenticator
 import os
-
 
 app = FastAPI()
 app.include_router(authenticator.router)
@@ -31,9 +38,32 @@ def launch_details():
             "min": "00",
         }
     }
+
+
+@app.get("/appointment/history/{landlord_id}")
+def get_landlord_appointment_history(landlord_id: int):
+    # Your logic to fetch the appointment history for the given landlord_id
+    # For now, we will return dummy data
+    appointments = [
+        {
+            "id": 1,
+            "landlord_id": landlord_id,
+            "datetime": "2023-07-28T10:00:00",
+            "description": "Meeting with tenant 1",
+        },
+        {
+            "id": 2,
+            "landlord_id": landlord_id,
+            "datetime": "2023-07-30T15:30:00",
+            "description": "Property inspection",
+        },
+    ]
+    return appointments
+
+
 app.include_router(billings.router)
 app.include_router(property.router)
 app.include_router(status.router)
 app.include_router(rent.router)
 app.include_router(appointments.router)
-app.include_router(appointment_history_router)
+app.include_router(appointment_history.router)

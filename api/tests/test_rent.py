@@ -1,7 +1,6 @@
 from fastapi.testclient import TestClient
-from main import app
 from queries.rent import RentRepository
-
+from main import app
 
 client = TestClient(app)
 

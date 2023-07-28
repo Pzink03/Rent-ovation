@@ -9,11 +9,8 @@ import "./css/App.css";
 
 import TenantPage from "./TenantPage.js";
 import AboutPage from "./AboutPage.js";
-import Login from "./LoginForm.js";
+import LoginForm from "./LoginForm.js";
 import BillingsPage from "./Billings.js";
-
-import TenantSignupForm from "./TenantSignupForm.js";
-import LandlordSignupForm from "./LandlordSignupForm.js";
 
 function App() {
   // const { token } = useToken();

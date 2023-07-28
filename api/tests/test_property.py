@@ -1,21 +1,22 @@
 from fastapi.testclient import TestClient
-from main import app
 from queries.property import PropertyRepository
-
+from main import app
 
 client = TestClient(app)
+
 
 class EmptyPropertyQueries:
     def get_all_properties(self):
         return []
 
+
 def test_get_all_properties():
-    #Arrange
+    # Arrange
     app.dependency_overrides[PropertyRepository] = EmptyPropertyQueries
-    #Act
+    # Act
     response = client.get("/property/")
-    #Clean up
+    # Clean up
     app.dependency_overrides = {}
-    #Assert
+    # Assert
     assert response.status_code == 200
     assert response.json() == []

@@ -1,7 +1,6 @@
 from fastapi.testclient import TestClient
-from main import app
 from queries.accounts import AccountRepository
-
+from main import app
 
 client = TestClient(app)
 
