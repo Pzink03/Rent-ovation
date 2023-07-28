@@ -47,7 +47,9 @@ function App() {
           <Route path="/" element={<MainPage />} />
           <Route path="/billings" element={<BillingsPage />} />
           <Route path="/landlord" element={<LandlordPage />} />
-          <Route path="/property" element={<PropertyForm />} />
+          <Route path="/appointment-history" element={<AppointmentHistoryPage />} />
+          <Route path="/tenant-signup" element={<TenantSignupForm />} />
+          <Route path="/landlord-signup" element={<LandlordSignupForm />} />
           <Route path="/tenant" element={<TenantPage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/add-appointment" element={<AppointmentForm />} />
