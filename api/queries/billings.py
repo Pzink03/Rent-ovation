@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from typing import Union, List
+from typing import Union, List, Optional
 from datetime import date
 from queries.pool import pool
 import traceback
@@ -9,52 +9,62 @@ class Error(BaseModel):
     message: str
 
 
+
 class BillingsIn(BaseModel):
     name: str
     card_number: int
-    expirydate: date
+    expirydate: int
     cvv: int
+
+
 
 
 class BillingsOut(BaseModel):
     id: int
+    tenant_id: Optional[str]
     name: str
     card_number: int
-    expirydate: date
+    expirydate: int
     cvv: int
+
+
 
 class BillingsUpdate(BaseModel):
     id: int
+    tenant_id: Optional[str]
     name: str
     card_number: int
-    expirydate: date
+    expirydate: int
     cvv: int
 
+
 class BillingsRepository:
-    def create_billings(self, billings: BillingsIn) -> Union[BillingsOut, Error]:
+    def create_billings(self, billings: BillingsIn, tenant_id: int) -> Union[BillingsOut, Error]:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
                     result = db.execute(
                         """
                         INSERT INTO billings
-                            ( name, card_number, expirydate, cvv)
+                            (tenant_id, name, card_number, expirydate, cvv)
                         VALUES
-                            (%s,%s,%s,%s)
+                            (%s,%s,%s,%s,%s)
                         RETURNING id;
                         """,
 
                         [
+                            tenant_id,
                             billings.name,
                             billings.card_number,                        
                             billings.expirydate,
                             billings.cvv,
-                         ],
+                         ]
                     )
         
                     id = result.fetchone()[0]
                     return BillingsOut(
                         id=id,
+                        tenant_id=str(tenant_id),
                         name=billings.name,
                         card_number=billings.card_number,
                         expirydate=billings.expirydate,
@@ -72,6 +82,7 @@ class BillingsRepository:
                     db.execute(
                         """
                         SELECT id
+                        , tenant_id
                         , name
                         , card_number
                         , expirydate
@@ -83,10 +94,11 @@ class BillingsRepository:
                     return [
                         BillingsOut(
                             id=record[0],
-                            name=record[1],
-                            card_number=record[2],
-                            expirydate=record[3],
-                            cvv=record[4],
+                            tenant_id=record[1],
+                            name=record[2],
+                            card_number=record[3],
+                            expirydate=record[4],
+                            cvv=record[5],
                         )
                         for record in db.fetchall() 
                     ]
@@ -101,7 +113,7 @@ class BillingsRepository:
                     db.execute(
                     """
                         UPDATE billings
-                        SET name = %s
+                        SET , name = %s
                         , card_number = %s
                         , expirydate = %s
                         , cvv = %s

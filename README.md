@@ -11,9 +11,27 @@ Rent-ovation - One stop for property managers and renters to manage their proper
 
 ## Design
 
+Key Features - MVP
+
+Users are able to sign up for landlord or tenant accounts, log in, and log out.
+Logged in tenants can add and manange rental property.
+Logged in tenants book appointments with your landlord.
+Logged in landlords can add & manage properties.
+Logged in landlords can manage appointments with tenants.
+
+Design
+
+Wireframe
+API
+Schemas
+
 ## Intended Market
 
-We are targeting property managers and renters who are looking for a streamlined user experience to manage their properties. They will be able to manage/book appointments and rental payments.
+Introducing "Rent-ovation" - The All-In-One Property Management App for Landlords and Tenants!
+
+Are you a landlord struggling to keep track of your properties, appointments with potential tenants, and rental payments? Or are you a tenant trying to find your perfect home and stay organized with rent payments? Look no further! Rent-ovation is here to simplify the property management experience for both landlords and tenants.
+
+Experience the convenience, efficiency, and peace of mind Rent-ovation offers to both landlords and tenants. Streamline your property management and rental experience with Rent-ovation today!
 
 ## Functionality
 
@@ -36,30 +54,6 @@ To fully enjoy this application on your local machine, please follow these steps
 4. Run docker volume create postgres-data
 5. Run docker compose build
 6. Run docker compose up
-   Rent-ovation
-
-Introducing "Rent-ovation" - The All-In-One Property Management App for Landlords and Tenants!
-
-Are you a landlord struggling to keep track of your properties, appointments with potential tenants, and rental payments? Or are you a tenant trying to find your perfect home and stay organized with rent payments? Look no further! Rent-ovation is here to simp lify the property management experience for both landlords and tenants.
-
-Experience the convenience, efficiency, and peace of mind Rent-ovation offers to both landlords and tenants. Streamline your property management and rental experience with Rent-ovation today!
-
-Key Features - MVP
-
-Users are able to sign up for landlord or tenant accounts, log in, and log out.
-Logged in tenants can add and manange rental property.
-Logged in tenants can pay And manage your rental due date.
-Logged in tenants book appointments with your landlord.
-Logged in landlords can add & manage properties.
-Logged in landlords can allow tenants to make rent payments.
-Logged in landlords can keep track of rental property due dates.
-Logged in landlords can manage appointments with tenants.
-
-Design
-
-Wireframe
-API
-Schemas
 
 Installation
 

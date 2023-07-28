@@ -22,7 +22,7 @@ function TenantPropertyCard() {
   };
 
   const getProperties = async () => {
-    const propertiesUrl = "http://localhost:8000/property/";
+    const propertiesUrl = "http://localhost:8000/property/tenant";
     const fetchOptions = {
       method: "get",
       credentials: "include",
@@ -41,7 +41,7 @@ function TenantPropertyCard() {
 
   useEffect(() => {
     getToken();
-  }, []);
+  }, [token]);
 
   return (
     <div className="landlord-cards-container">
@@ -55,7 +55,6 @@ function TenantPropertyCard() {
       ) : (
         properties.map((property) => (
           <div key={property.id} property={property} className="property-card">
-            {/* Property Card content */}
             <div className="property-name">{property.name}</div>
             <div className="property-header">
               <img
@@ -64,7 +63,7 @@ function TenantPropertyCard() {
                 alt=""
               />
             </div>
-            <div className="property-feature">{property.name}</div>
+            <div className="property-feature">{property.property_name}</div>
             <div className="property-feature">{property.address}</div>
             <div className="property-feature">{property.city}</div>
             <div className="property-feature">{property.state}</div>

@@ -17,7 +17,7 @@ authenticator = AccountAuthenticator(os.environ["SIGNING_KEY"])
 router = APIRouter()
 
 
-@router.post("/create/appointment/", response_model=AppointmentOut)
+@router.post("/appointment/", response_model=AppointmentOut)
 def create_appointment(
     appointment: AppointmentIn,
     repo: AppointmentRepository = Depends(),

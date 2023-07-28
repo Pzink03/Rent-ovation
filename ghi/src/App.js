@@ -12,6 +12,7 @@ import "./css/App.css";
 import TenantPage from "./TenantPage.js";
 import AboutPage from "./AboutPage.js";
 import LoginForm from "./LoginForm.js";
+import AppointmentHistoryPage from "./AppointmentHistoryPage.js";
 
 function App() {
   return (
@@ -29,6 +30,10 @@ function App() {
           <Route path="/signup" element={<SignupForm />} />
           <Route path="/rent" element={<RentForm />} />
           <Route path="/login" element={<LoginForm />} />
+          <Route
+            path="/appointment-history"
+            element={<AppointmentHistoryPage />}
+          />
         </Routes>
       </AuthProvider>
     </BrowserRouter>
