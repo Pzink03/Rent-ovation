@@ -9,7 +9,6 @@ function BillingsPage() {
     const [expirydate, setExpirydate] = useState([]);
     const [cvv, setCvv] = useState([]);
     const { token } = useAuthContext();
-
     const handleNameChange = (event) => {
         const value = event.target.value;
         setName(value);
