@@ -116,7 +116,7 @@ class PropertyRepository:
             return Error(message="Get all properties failed")
 
 
-    def get_all_properties_from_user(self, id) -> Union[Error, List[PropertyOut]]:
+    def get_all_properties_from_landlord(self, id) -> Union[Error, List[PropertyOut]]:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
@@ -134,6 +134,37 @@ class PropertyRepository:
                             , description
                             FROM property
                             WHERE landlord_id = %s
+                            ORDER BY id;
+                            """,
+                                [id],
+                    )
+                    return [
+                        self.record_to_property_out(record)
+                        for record in result
+                    ]
+        except Exception:
+            traceback.print_exc()
+            return Error(message="Get user properties failed")
+
+
+    def get_property_for_tenant(self, id) -> Union[Error, List[PropertyOut]]:
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    result = db.execute(
+                        """
+                        SELECT id
+                            , landlord_id
+                            , tenant_id
+                            , name
+                            , address
+                            , city
+                            , state
+                            , zipcode
+                            , picture_url
+                            , description
+                            FROM property
+                            WHERE tenant_id = %s
                             ORDER BY id;
                             """,
                                 [id],

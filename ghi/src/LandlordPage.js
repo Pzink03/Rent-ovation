@@ -1,13 +1,15 @@
-import React, { useState, useEffect } from "react";
 import logo from "./img/logo.png";
+// import profile1 from "./img/profile1.jpg";
 import sidebarhome from "./img/sidebarhome.png";
 import appointmentlogo from "./img/appointmentlogo.png";
 import { NavLink } from "react-router-dom";
 import PropertyCard from "./Propertycard";
 import AppointmentCard from "./AppointmentCard";
 import LogoutSidebarIcon from "./img/LogoutSidebarIcon.png";
+import useToken from "@galvanize-inc/jwtdown-for-react";
 
-function LandlordPage(props) {
+function LandlordPage() {
+  const { logout } = useToken();
   return (
     <>
       <div className="">
@@ -29,9 +31,8 @@ function LandlordPage(props) {
                     <div className="sidebar-link-text">Add Property</div>
                   </NavLink>
                 </li>
-                {/* link for the appointment history */}
                 <li className="sidebar-list-item">
-                  <NavLink className="sidebar-link" to="/appointment-history">
+                  <NavLink className="sidebar-link" href="#">
                     <img
                       className="sidebar-icon"
                       src={appointmentlogo}
@@ -45,7 +46,11 @@ function LandlordPage(props) {
             <div className="bottom-sidebar">
               <ul className="sidebar-list">
                 <li className="sidebar-list-item">
-                  <NavLink className="sidebar-link" href="#">
+                  <NavLink
+                    className="sidebar-link"
+                    to="/"
+                    onClick={() => logout()}
+                  >
                     <img
                       className="sidebar-icon"
                       src={LogoutSidebarIcon}
@@ -57,10 +62,7 @@ function LandlordPage(props) {
               </ul>
             </div>
           </aside>
-          {window.location.pathname === "/property" && <PropertyCard />}
-          {window.location.pathname === "/appointment-history" && (
-            <AppointmentHistoryPage />
-          )}
+          <PropertyCard />
         </header>
         <h2 className="section-title">Appointments</h2>
         <AppointmentCard />

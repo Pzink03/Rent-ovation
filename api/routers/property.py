@@ -49,10 +49,19 @@ def get_all_properties(
     return repo.get_all_properties()
 
 
-@router.get("/property/user", response_model=List[PropertyOut])
-def get_all_properties_from_user(
+@router.get("/property/landlord", response_model=List[PropertyOut])
+def get_all_properties_from_landlord(
     repo: PropertyRepository = Depends(),
     account_data: dict = Depends(authenticator.get_current_account_data),
 ):
     id = account_data["id"]
-    return repo.get_all_properties_from_user(id)
+    return repo.get_all_properties_from_landlord(id)
+
+
+@router.get("/property/tenant", response_model=List[PropertyOut])
+def get_property_for_tenant(
+    repo: PropertyRepository = Depends(),
+    account_data: dict = Depends(authenticator.get_current_account_data),
+):
+    id = account_data["id"]
+    return repo.get_property_for_tenant(id)

@@ -1,5 +1,6 @@
 import { NavLink } from "react-router-dom";
 import React, { useState, useEffect } from "react";
+
 import useToken from "@galvanize-inc/jwtdown-for-react";
 import { useAuthContext } from "@galvanize-inc/jwtdown-for-react";
 import logo from "./img/logo.png";
@@ -10,6 +11,7 @@ import "./form.css";
 function Nav() {
   // console.log(account);
   const { token } = useAuthContext();
+  const { logout } = useToken();
   console.log(token);
 
   const [account, setAccount] = useState([]);
@@ -46,12 +48,22 @@ function Nav() {
         {account?.id ? (
           <>
             <li>
-              <NavLink className="btn" to="/landlord">
-                Home
-              </NavLink>
+              {account.is_landlord ? (
+                <NavLink className="btn" to="/landlord">
+                  Home
+                </NavLink>
+              ) : (
+                <NavLink className="btn" to="/tenant">
+                  Home
+                </NavLink>
+              )}
             </li>
             <li>
-              <NavLink className="btn" to="/signup">
+              <NavLink
+                className="btn btn-animation btn-danger"
+                to="/"
+                onClick={() => logout()}
+              >
                 Logout
               </NavLink>
             </li>
@@ -63,7 +75,6 @@ function Nav() {
                 Sign Up
               </NavLink>
             </li>
-
             <li>
               <NavLink className="btn" to="/login">
                 Login

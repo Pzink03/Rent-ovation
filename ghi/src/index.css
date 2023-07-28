@@ -67,7 +67,7 @@ body {
   font-weight: bold;
   margin: 0;
   text-align: center;
-
+  font-family: Playfair Display;
   animation: title-enter var(--title-duration);
 }
 
@@ -78,6 +78,7 @@ body {
   margin-bottom: 2rem;
   color: var(--light-blue-color);
   text-align: center;
+  font-family: Lato;
   animation: sub-title-enter var(--sub-title-duration) var(--sub-title-delay)
     backwards;
 }
@@ -373,6 +374,7 @@ body {
 .card-name {
   font-size: 1.5rem;
   margin-bottom: 0.5rem;
+  font-family: Oswald;
 }
 
 .card-feature {
@@ -386,6 +388,7 @@ body {
   padding: 0.3rem;
   font-size: 1.25rem;
   align-self: flex-start;
+  font-family: Consolas;
 }
 
 .feature:last-child {
@@ -422,6 +425,12 @@ body {
 
 .sub-title.about {
   margin: 3rem;
+  font-weight: bold;
+  font-family: Playfair Display;
+}
+
+.section-title {
+  font-family: Playfair Display;
 }
 
 .main-cards-container.about {
@@ -450,6 +459,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  font-family: Lato;
 }
 
 .testimonial-grid-item.appointments {
