@@ -34,8 +34,14 @@ function TenantPropertyCard() {
     const propertyResponse = await fetch(propertiesUrl, fetchOptions);
     if (propertyResponse.ok) {
       const properties = await propertyResponse.json();
-      console.log(properties);
-      setProperties(properties);
+      if (
+        typeof properties === "object" &&
+        properties.hasOwnProperty("message")
+      ) {
+        setProperties([]);
+      } else {
+        setProperties(properties);
+      }
     }
   };
 
