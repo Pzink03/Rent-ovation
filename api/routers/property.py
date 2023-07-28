@@ -1,5 +1,5 @@
 import os
-from fastapi import APIRouter, Depends, HTTPException, Response, status
+from fastapi import APIRouter, Depends
 from typing import List, Union
 from authenticator import AccountAuthenticator
 from queries.property import (
@@ -8,7 +8,6 @@ from queries.property import (
     PropertyRepository,
     PropertyUpdate,
     Error,
-    DuplicateAccountError
 )
 
 
