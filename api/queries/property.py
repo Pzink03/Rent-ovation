@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, ValidationError
 from typing import Optional, List, Union
 from queries.pool import pool
 import traceback
@@ -6,6 +6,11 @@ import traceback
 
 class Error(BaseModel):
     message: str
+
+
+class DuplicateAccountError(ValueError):
+    pass
+
 
 
 class PropertyIn(BaseModel):
@@ -20,14 +25,14 @@ class PropertyIn(BaseModel):
 
 
 class PropertyOut(BaseModel):
-    id: str
-    landlord_id: str
+    id: Optional[str]
+    landlord_id: Optional[str]
     tenant_id: Optional[str]
-    name: str
-    address: str
-    city: str
-    state: str
-    zipcode: int
+    name: Optional[str]
+    address: Optional[str]
+    city: Optional[str]
+    state: Optional[str]
+    zipcode: Optional[str]
     picture_url: Optional[str]
     description: Optional[str]
 
@@ -45,32 +50,33 @@ class PropertyUpdate(BaseModel):
 
 
 class PropertyRepository:
-    def create(self, property: PropertyIn, landlord_id: int) -> Union[PropertyOut, Error]:
+    def create(self, property: PropertyIn, landlord_id: int) -> Union[Optional[PropertyOut], Error]:
         try:
-            with pool.connection() as conn:
-                with conn.cursor() as db:
-                    result = db.execute(
-                        """
-                        INSERT INTO property
-                            (landlord_id, tenant_id, name, address, city, state, zipcode, picture_url, description)
-                        VALUES
-                            (%s,%s,%s,%s,%s,%s,%s,%s,%s)
-                        RETURNING id;
-                        """,
-                        [
-                            landlord_id,
-                            property.tenant_id,
-                            property.name,
-                            property.address,
-                            property.city,
-                            property.state,
-                            property.zipcode,
-                            property.picture_url,
-                            property.description,
-                        ]
-                    )
-                    id = str(result.fetchone()[0])
-                    return PropertyOut(
+            if self.check_tenant(property.tenant_id) is False:
+                with pool.connection() as conn:
+                    with conn.cursor() as db:
+                        result = db.execute(
+                            """
+                            INSERT INTO property
+                                (landlord_id, tenant_id, name, address, city, state, zipcode, picture_url, description)
+                            VALUES
+                                (%s,%s,%s,%s,%s,%s,%s,%s,%s)
+                            RETURNING id;
+                            """,
+                            [
+                                landlord_id,
+                                property.tenant_id,
+                                property.name,
+                                property.address,
+                                property.city,
+                                property.state,
+                                property.zipcode,
+                                property.picture_url,
+                                property.description,
+                            ]
+                        )
+                        id = str(result.fetchone()[0])
+                        new_property = PropertyOut(
                         id=id,
                         landlord_id=str(landlord_id),
                         tenant_id=str(property.tenant_id),
@@ -81,10 +87,12 @@ class PropertyRepository:
                         zipcode=property.zipcode,
                         picture_url=property.picture_url,
                         description=property.description
-                    )
+                        )
+                        if new_property is not None:
+                            return new_property
         except Exception:
-            traceback.print_exc()
-            return Error(message="Create property failed")
+            traceback.print_exc
+            return Error(message="failed to create")
 
 
     def get_all_properties(self) -> Union[Error, List[PropertyOut]]:
@@ -116,7 +124,7 @@ class PropertyRepository:
             return Error(message="Get all properties failed")
 
 
-    def get_all_properties_from_user(self, id) -> Union[Error, List[PropertyOut]]:
+    def get_all_properties_from_landlord(self, id) -> Union[Error, List[PropertyOut]]:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
@@ -138,13 +146,66 @@ class PropertyRepository:
                             """,
                                 [id],
                     )
-                    return [
-                        self.record_to_property_out(record)
-                        for record in result
-                    ]
+                    properties = [self.record_to_property_out(record) for record in result]
+                    if not properties:
+                        return Error(message="No properties")
+                    return properties
         except Exception:
             traceback.print_exc()
             return Error(message="Get user properties failed")
+
+
+    def get_property_for_tenant(self, id) -> Union[Error, List[PropertyOut]]:
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    result = db.execute(
+                        """
+                        SELECT id
+                            , landlord_id
+                            , tenant_id
+                            , name
+                            , address
+                            , city
+                            , state
+                            , zipcode
+                            , picture_url
+                            , description
+                            FROM property
+                            WHERE tenant_id = %s
+                            ORDER BY id;
+                            """,
+                                [id],
+                    )
+                    properties = [self.record_to_property_out(record) for record in result]
+                    if not properties:
+                        return Error(message="No properties")
+                    return properties
+        except Exception:
+            traceback.print_exc()
+            return Error(message="Get user properties failed")
+
+
+    def check_tenant(self, tenant_id: int) -> bool:
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    db.execute(
+                        """
+                        SELECT id
+                        FROM property
+                        WHERE tenant_id = %s
+                        """,
+                        [tenant_id]
+                    )
+                    if db.fetchone() is not None:
+                        return True
+                    else:
+                        return False
+        except Exception:
+            return False
+
+
 
 
     def record_to_property_out(self, record):
