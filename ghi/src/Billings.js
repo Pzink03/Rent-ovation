@@ -3,44 +3,52 @@ import React, { useState } from "react";
 import { useAuthContext } from "@galvanize-inc/jwtdown-for-react";
 
 function BillingsPage() {
-  const [name, setName] = useState([]);
-  const [card_number, setCard_number] = useState([]);
-  const [expirydate, setExpirydate] = useState([]);
-  const [cvv, setCvv] = useState([]);
-  const { token } = useAuthContext();
+    const [name, setName] = useState([]);
+    const [card_number, setCard_number] = useState([]);
+    const [expirydate, setExpirydate] = useState([]);
+    const [cvv, setCvv] = useState([]);
+    const { token } = useAuthContext();
+    const handleNameChange = (event) => {
+        const value = event.target.value;
+        setName(value);
+    }
+    const handleCard_NumberChange = (event) => {
+        const value = event.target.value;
+        setCard_number(value);
+    }
+        const handleExpirydateChange = (event) => {
+        const value = event.target.value;
+        setExpirydate(value);
+    }
+    const handleCvvChange = (event) => {
+        const value = event.target.value;
+        setCvv(value);
+    }
+        const handleSubmit = async (event) => {
+            event.preventDefault();
+            const data = {};
+            data.name = name;
+            data.card_number = card_number;
+            data.expirydate = expirydate;
+            data.cvv = cvv;
+            console.log(data);
+            const url = 'http://localhost:8000/create/billings/';
+            const fetchOptions = {
+                method: "post",
+                body: JSON.stringify(data),
+                headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
+        };
+        const createBillingsResponse = await fetch(url, fetchOptions);
+        if (createBillingsResponse.ok) {
+            setName('');
+            setCard_number('');
+            setExpirydate('');
+            setCvv('');
 
-  const handleNameChange = (event) => {
-    const value = event.target.value;
-    setName(value);
-  };
-  const handleCard_NumberChange = (event) => {
-    const value = event.target.value;
-    setCard_number(value);
-  };
-  const handleExpirydateChange = (event) => {
-    const value = event.target.value;
-    setExpirydate(value);
-  };
-  const handleCvvChange = (event) => {
-    const value = event.target.value;
-    setCvv(value);
-  };
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    const data = {};
-    data.name = name;
-    data.card_number = card_number;
-    data.expirydate = expirydate;
-    data.cvv = cvv;
-    console.log(data);
-    const url = "http://localhost:8000/create/billings/";
-    const fetchOptions = {
-      method: "post",
-      body: JSON.stringify(data),
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
+        }
     };
     const createBillingsResponse = await fetch(url, fetchOptions);
     if (createBillingsResponse.ok) {
