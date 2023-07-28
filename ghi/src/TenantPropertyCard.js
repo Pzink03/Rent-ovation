@@ -17,12 +17,15 @@ function TenantPropertyCard() {
       const token = await tokenResponse.json();
       if (token !== null) {
         getProperties();
+        setAccount(token.account);
+      } else {
+        setAccount([]);
       }
     }
   };
 
   const getProperties = async () => {
-    const propertiesUrl = "http://localhost:8000/property/user";
+    const propertiesUrl = "http://localhost:8000/property/tenant";
     const fetchOptions = {
       method: "get",
       credentials: "include",
@@ -41,7 +44,7 @@ function TenantPropertyCard() {
 
   useEffect(() => {
     getToken();
-  }, []);
+  }, [token]);
 
   return (
     <div className="landlord-cards-container">
@@ -51,16 +54,10 @@ function TenantPropertyCard() {
             You don't have a property assigned to your account. <br></br>Speak
             with your landlord about adding one
           </h1>
-          {/* <div className="property-btn-container">
-            <NavLink className="contact-btn btn" to="/property">
-              Add Property
-            </NavLink>
-          </div> */}
         </div>
       ) : (
         properties.map((property) => (
           <div key={property.id} property={property} className="property-card">
-            {/* Property Card content */}
             <div className="property-name">{property.name}</div>
             <div className="property-header">
               <img
@@ -69,14 +66,14 @@ function TenantPropertyCard() {
                 alt=""
               />
             </div>
-            <div className="property-feature">{property.name}</div>
+            <div className="property-feature">{property.property_name}</div>
             <div className="property-feature">{property.address}</div>
             <div className="property-feature">{property.city}</div>
             <div className="property-feature">{property.state}</div>
             <div className="property-feature">{property.zipcode}</div>
             <div className="property-feature">{property.address}</div>
             <div className="btn-container">
-              <NavLink className="btn btn-animation tenant-btn" to="/billings">
+              <NavLink className="btn btn-animation tenant-btn" to="/tenant">
                 Pay Rent
               </NavLink>
               <NavLink
