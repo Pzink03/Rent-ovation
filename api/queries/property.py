@@ -8,11 +8,6 @@ class Error(BaseModel):
     message: str
 
 
-class DuplicateAccountError(ValueError):
-    pass
-
-
-
 class PropertyIn(BaseModel):
     tenant_id: Optional[int]
     name: str
