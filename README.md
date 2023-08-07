@@ -11,14 +11,6 @@ Rent-ovation - One stop for property managers and renters to manage their proper
 
 ## Design
 
-Key Features - MVP
-
-Users are able to sign up for landlord or tenant accounts, log in, and log out.
-Logged in tenants can add and manange rental property.
-Logged in tenants book appointments with your landlord.
-Logged in landlords can add & manage properties.
-Logged in landlords can manage appointments with tenants.
-
 Design
 
 Wireframe
@@ -35,14 +27,24 @@ Experience the convenience, efficiency, and peace of mind Rent-ovation offers to
 
 ## Functionality
 
-Visitors to the site will have the option t learn more about the site through our about page that will also contain our user testimonials.
-Visitors to the site will be able to choose what type of user they want to sign up as.
-
-- If the user signs up as a landlord they will be able to add an manage all of their properties unique to their account.
-- The landlord will be get alerts when rent for a property is past due or if the tenant schedules an appointment with them.
-- The landlord will be able to view a list of all his completed appointments.
-- If the user signs up as a Tenant they will have their property linked to their account.
-- The Tenant will be notified if their rent payment is past due
+Key Features - MVP
+-Visitors to the site will have the option to learn more about the site through our about page that will also contain our user testimonials.
+-Users are able to sign up for landlord or tenant accounts
+-Logged in users Navbar will change from sign up and login to home and logout
+-Home will take the tenant and the landlord to different home pages depending on the user type
+-Tenants can log in to their account and view their rental property
+-If the tenant has no properties it will notify them
+-Logged in tenants can manage their rental property.
+-Logged in tenants can book appointments with their landlord.
+-When booking an appointment you can state the urgency and the issue
+-Landlords can log into their account and view their properties
+-If the landlord has no properties he will be notified and asked to add them
+-If the landlord has no appointments the landlord will be notified
+-Logged in landlords can add & manage properties.
+-The landlord can only add properties to tenant accounts that don't have a property assigned
+-Each property will display on its own individual property card
+-Logged in landlords can manage appointments with tenants.
+-Each appointment will display on its own individual appointment card
 
 ## Project Initialization
 

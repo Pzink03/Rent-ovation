@@ -1,8 +1,5 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
 import TenantPropertyCard from "./TenantPropertyCard";
-
-import header_image from "./img/header_image.jpg";
 import "./css/tenantpage.css";
 
 function TenantPage() {
